@@ -80,6 +80,10 @@
     color:var(--ivory);overflow:hidden;
     display:flex;align-items:center;
   }
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(95deg,rgba(38,39,42,.9) 0%,rgba(38,39,42,.62) 34%,rgba(38,39,42,.12) 62%,rgba(38,39,42,0) 80%);
+  }
   .hero-sky{position:absolute;inset:0;z-index:0}
   .hero-sky svg{width:100%;height:100%}
   .ray{transform-origin:600px 470px;animation:rayGrow 1.6s cubic-bezier(.2,.8,.2,1) both}
@@ -95,6 +99,7 @@
   .hero h1{
     font-size:clamp(3rem,9.5vw,7rem);line-height:.96;letter-spacing:.04em;
     margin:18px 0 8px;text-transform:uppercase;animation:fade 1s .5s both;
+    text-shadow:0 2px 24px rgba(30,24,18,.45);
   }
   .hero h1 .accent{color:var(--copper)}
   .hero .tagline{
@@ -278,25 +283,24 @@
   <div class="hero-sky" aria-hidden="true">
     <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMax slice">
       <defs>
-        <radialGradient id="glow" cx="50%" cy="62%" r="55%">
-          <stop offset="0%" stop-color="#c4865b" stop-opacity=".55"/>
-          <stop offset="40%" stop-color="#a86a40" stop-opacity=".12"/>
+        <radialGradient id="glow" cx="74%" cy="60%" r="52%">
+          <stop offset="0%" stop-color="#c4865b" stop-opacity=".5"/>
+          <stop offset="42%" stop-color="#a86a40" stop-opacity=".1"/>
           <stop offset="100%" stop-color="#a86a40" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <rect width="1200" height="760" fill="url(#glow)"/>
-      <g stroke="#c4865b" stroke-width="2" opacity=".7">
-        <line class="ray" x1="600" y1="470" x2="600" y2="120" style="animation-delay:.1s"/>
-        <line class="ray" x1="600" y1="470" x2="470" y2="150" style="animation-delay:.18s"/>
-        <line class="ray" x1="600" y1="470" x2="730" y2="150" style="animation-delay:.18s"/>
-        <line class="ray" x1="600" y1="470" x2="360" y2="215" style="animation-delay:.26s"/>
-        <line class="ray" x1="600" y1="470" x2="840" y2="215" style="animation-delay:.26s"/>
-        <line class="ray" x1="600" y1="470" x2="285" y2="305" style="animation-delay:.34s"/>
-        <line class="ray" x1="600" y1="470" x2="915" y2="305" style="animation-delay:.34s"/>
-        <line class="ray" x1="600" y1="470" x2="250" y2="410" style="animation-delay:.42s"/>
-        <line class="ray" x1="600" y1="470" x2="950" y2="410" style="animation-delay:.42s"/>
+      <g stroke="#c4865b" stroke-width="2" opacity=".62">
+        <line class="ray" x1="900" y1="540" x2="900" y2="150" style="animation-delay:.1s"/>
+        <line class="ray" x1="900" y1="540" x2="770" y2="180" style="animation-delay:.18s"/>
+        <line class="ray" x1="900" y1="540" x2="1030" y2="180" style="animation-delay:.18s"/>
+        <line class="ray" x1="900" y1="540" x2="665" y2="255" style="animation-delay:.26s"/>
+        <line class="ray" x1="900" y1="540" x2="1135" y2="255" style="animation-delay:.26s"/>
+        <line class="ray" x1="900" y1="540" x2="610" y2="360" style="animation-delay:.34s"/>
+        <line class="ray" x1="900" y1="540" x2="1210" y2="360" style="animation-delay:.34s"/>
+        <line class="ray" x1="900" y1="540" x2="1255" y2="470" style="animation-delay:.42s"/>
       </g>
-      <path class="sun-disc" d="M470 470a130 130 0 0 1 260 0Z" fill="#c4865b"/>
+      <path class="sun-disc" d="M780 540a120 120 0 0 1 240 0Z" fill="#c4865b"/>
       <g fill="none" stroke="#f4efe5" stroke-width="2.4" opacity=".5">
         <path class="wave w1" d="M-40 520q160 -34 320 0t320 0 320 0 320 0"/>
         <path class="wave w2" d="M-40 565q160 -34 320 0t320 0 320 0 320 0"/>
