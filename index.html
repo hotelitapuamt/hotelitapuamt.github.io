@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hotel Itapuã — Quartos com ar-condicionado, TV e frigobar</title>
+<meta name="description" content="Hotel Itapuã — quartos casal, duplo e triplo com ar-condicionado, TV e frigobar. Diárias a partir de R$160. Reserve já." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#36373b;
+    --slate-2:#44464b;
+    --ink:#26272a;
+    --ivory:#f4efe5;
+    --ivory-2:#eae2d4;
+    --sand:#e2d0ba;
+    --copper:#c4865b;
+    --copper-deep:#a86a40;
+    --coastal:#85a6c2;
+    --coastal-deep:#5d7e9c;
+    --line:rgba(244,239,229,.16);
+    --shadow:0 24px 60px -28px rgba(20,18,16,.55);
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Outfit",system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--ivory);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.disp{font-family:"Marcellus",Georgia,serif;font-weight:400;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
+    font-weight:500;color:var(--copper);
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;transition:.4s ease;
+  }
+  header.nav.scrolled{
+    background:rgba(54,55,59,.92);backdrop-filter:blur(10px);
+    padding:12px 28px;box-shadow:0 1px 0 var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:13px;color:var(--ivory)}
+  .brand .mark{width:34px;height:42px;flex:none}
+  .brand .name{font-family:"Marcellus",serif;font-size:1.18rem;letter-spacing:.12em;line-height:1}
+  .brand .name small{display:block;font-size:.58rem;letter-spacing:.46em;color:var(--copper);margin-top:3px}
+  nav.links{display:flex;gap:30px;align-items:center}
+  nav.links a{color:var(--ivory);font-size:.82rem;letter-spacing:.08em;opacity:.82;transition:.25s}
+  nav.links a:hover{opacity:1;color:var(--sand)}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.84rem;letter-spacing:.06em;font-weight:500;
+    padding:12px 22px;border-radius:2px;cursor:pointer;transition:.28s;
+    border:1px solid transparent;
+  }
+  .btn-copper{background:var(--copper);color:#fff}
+  .btn-copper:hover{background:var(--copper-deep);transform:translateY(-1px)}
+  .btn-ghost{border-color:var(--line);color:var(--ivory)}
+  .btn-ghost:hover{border-color:var(--sand);background:rgba(244,239,229,.06)}
+  .nav-cta{display:inline-flex}
+  .burger{display:none}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100svh;
+    background:linear-gradient(180deg,#2c2d31 0%,#3a3b40 52%,#45403c 100%);
+    color:var(--ivory);overflow:hidden;
+    display:flex;align-items:center;
+  }
+  .hero-sky{position:absolute;inset:0;z-index:0}
+  .hero-sky svg{width:100%;height:100%}
+  .ray{transform-origin:600px 470px;animation:rayGrow 1.6s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes rayGrow{from{opacity:0;transform:scaleY(.2)}to{opacity:.85;transform:scaleY(1)}}
+  .sun-disc{transform-origin:center;animation:rise 1.8s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
+  .wave{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s ease forwards}
+  .wave.w2{animation-delay:.25s}.wave.w3{animation-delay:.5s}.wave.w4{animation-delay:.75s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .hero-inner .eyebrow{animation:fade 1s .3s both}
+  .hero h1{
+    font-size:clamp(3rem,9.5vw,7rem);line-height:.96;letter-spacing:.04em;
+    margin:18px 0 8px;text-transform:uppercase;animation:fade 1s .5s both;
+  }
+  .hero h1 .accent{color:var(--copper)}
+  .hero .tagline{
+    font-size:clamp(1rem,2.4vw,1.3rem);max-width:30ch;color:var(--ivory-2);
+    font-weight:300;animation:fade 1s .7s both;
+  }
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;animation:fade 1s .9s both}
+  @keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  .rate-strip{
+    position:relative;z-index:2;border-top:1px solid var(--line);
+    background:rgba(38,39,42,.5);backdrop-filter:blur(4px);
+  }
+  .rate-strip .wrap{display:flex;flex-wrap:wrap}
+  .rate-strip a{
+    flex:1 1 0;min-width:150px;color:var(--ivory);
+    padding:22px 24px;display:flex;align-items:baseline;gap:14px;
+    border-left:1px solid var(--line);transition:.3s;
+  }
+  .rate-strip a:first-child{border-left:none}
+  .rate-strip a:hover{background:rgba(196,134,91,.14)}
+  .rate-strip .t{font-family:"Marcellus",serif;font-size:1.02rem;letter-spacing:.14em;text-transform:uppercase}
+  .rate-strip .p{margin-left:auto;font-size:1.15rem;color:var(--sand)}
+  .rate-strip .p b{font-weight:500}
+  .rate-strip .p span{font-size:.72rem;opacity:.6;letter-spacing:.05em}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:104px 0}
+  .head{max-width:640px;margin-bottom:54px}
+  .head h2{font-size:clamp(2rem,5vw,3.1rem);line-height:1.05;margin:14px 0 16px;color:var(--slate)}
+  .head p{color:#6a665e;font-weight:300;font-size:1.05rem}
+
+  /* ---------- ROOMS ---------- */
+  .rooms{background:var(--ivory)}
+  .room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .room{
+    background:#fff;border-radius:3px;overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:0 18px 40px -30px rgba(20,18,16,.4);
+    border:1px solid rgba(54,55,59,.07);transition:.35s;
+  }
+  .room:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .room .ph{aspect-ratio:4/3;overflow:hidden;position:relative}
+  .room .ph img{transition:transform .8s ease}
+  .room:hover .ph img{transform:scale(1.06)}
+  .room .ph .tag{
+    position:absolute;top:14px;left:14px;background:rgba(38,39,42,.82);
+    color:var(--ivory);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:6px 12px;border-radius:2px;
+  }
+  .room .body{padding:24px 24px 28px;display:flex;flex-direction:column;flex:1}
+  .room h3{font-size:1.55rem;color:var(--slate)}
+  .room .fits{font-size:.85rem;color:#857f74;letter-spacing:.04em;margin-top:4px}
+  .room .price{margin-top:18px;display:flex;align-items:baseline;gap:8px}
+  .room .price .v{font-family:"Marcellus",serif;font-size:2.1rem;color:var(--copper-deep)}
+  .room .price .u{font-size:.8rem;color:#9a9488}
+  .room .line{height:1px;background:rgba(54,55,59,.1);margin:18px 0}
+  .room ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+  .room ul li{
+    font-size:.74rem;letter-spacing:.04em;color:#6a665e;
+    background:var(--ivory-2);padding:5px 11px;border-radius:2px;
+  }
+  .room .res{margin-top:auto;padding-top:22px}
+  .room .res a{
+    display:block;text-align:center;padding:12px;border-radius:2px;
+    border:1px solid var(--copper);color:var(--copper-deep);
+    font-size:.82rem;letter-spacing:.08em;font-weight:500;transition:.3s;
+  }
+  .room .res a:hover{background:var(--copper);color:#fff}
+
+  /* ---------- AMENITIES ---------- */
+  .amen{background:var(--slate);color:var(--ivory)}
+  .amen .head h2{color:var(--ivory)}
+  .amen .head p{color:rgba(244,239,229,.66)}
+  .amen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .amen-grid .cell{background:var(--slate);padding:38px 28px;transition:.35s}
+  .amen-grid .cell:hover{background:var(--slate-2)}
+  .amen-grid .ic{width:34px;height:34px;color:var(--copper);margin-bottom:18px}
+  .amen-grid h3{font-size:1.15rem;letter-spacing:.06em;margin-bottom:7px}
+  .amen-grid p{font-size:.86rem;color:rgba(244,239,229,.6);font-weight:300}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{background:var(--ivory-2)}
+  .g-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px}
+  .g-grid figure{overflow:hidden;border-radius:3px;position:relative}
+  .g-grid img{transition:transform .9s ease}
+  .g-grid figure:hover img{transform:scale(1.07)}
+  .g-grid .big{grid-column:span 2;grid-row:span 2}
+  .g-grid .tall{grid-row:span 2}
+
+  /* ---------- LOCATION ---------- */
+  .loc{background:var(--ivory)}
+  .loc-card{
+    display:grid;grid-template-columns:1.1fr 1fr;gap:0;border-radius:4px;overflow:hidden;
+    box-shadow:var(--shadow);background:var(--slate);
+  }
+  .loc-info{padding:56px 48px;color:var(--ivory)}
+  .loc-info .eyebrow{color:var(--sand)}
+  .loc-info h2{font-size:clamp(1.9rem,4vw,2.7rem);margin:14px 0 18px}
+  .loc-info p{color:rgba(244,239,229,.72);font-weight:300;margin-bottom:30px;max-width:38ch}
+  .loc-info .det{display:flex;gap:13px;align-items:flex-start;margin-bottom:18px;font-size:.95rem}
+  .loc-info .det svg{width:20px;height:20px;color:var(--copper);flex:none;margin-top:3px}
+  .loc-map{position:relative;min-height:360px;background:var(--coastal-deep)}
+  .loc-map .map-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,#5d7e9c,#41607c);overflow:hidden}
+  .loc-map .pin{position:relative;z-index:2;text-align:center;color:#fff;padding:24px}
+  .loc-map .pin svg{width:52px;height:52px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.3));animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .loc-map .grid-bg{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.13) 1px,transparent 1px);
+    background-size:46px 46px}
+  .loc-map .map-btn{margin-top:18px}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:var(--ivory);padding:74px 0 36px}
+  .foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-end;
+    padding-bottom:44px;border-bottom:1px solid var(--line)}
+  .foot-top h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.05;max-width:18ch}
+  .foot-top h2 .accent{color:var(--copper)}
+  .foot-rates{display:flex;gap:30px;flex-wrap:wrap}
+  .foot-rates div .t{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
+  .foot-rates div .v{font-family:"Marcellus",serif;font-size:1.7rem;color:var(--ivory)}
+  .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    margin-top:30px;font-size:.8rem;color:rgba(244,239,229,.5);letter-spacing:.04em}
+  .foot-bottom .brand .name{font-size:1rem}
+
+  @media(max-width:920px){
+    .room-grid{grid-template-columns:1fr 1fr}
+    .amen-grid{grid-template-columns:1fr 1fr}
+    .loc-card{grid-template-columns:1fr}
+    .g-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:680px){
+    nav.links,.nav-cta{display:none}
+    .room-grid{grid-template-columns:1fr}
+    section{padding:74px 0}
+    .wrap{padding:0 20px}
+    header.nav{padding:14px 20px}
+    .rate-strip a{flex:1 1 100%;border-left:none;border-top:1px solid var(--line)}
+    .rate-strip .wrap{flex-direction:column}
+    .loc-info{padding:40px 28px}
+    .g-grid .big{grid-column:span 2}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto}
+    .wave{stroke-dashoffset:0}
+  }
+  :focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Hotel Itapuã - início">
+    <svg class="mark" viewBox="0 0 60 74" aria-hidden="true">
+      <rect x="1" y="1" width="58" height="72" fill="none" stroke="#c4865b" stroke-width="1.4"/>
+      <g stroke="#c4865b" stroke-width="1.1">
+        <line x1="30" y1="42" x2="30" y2="9"/><line x1="30" y1="42" x2="18" y2="12"/>
+        <line x1="30" y1="42" x2="42" y2="12"/><line x1="30" y1="42" x2="9" y2="20"/>
+        <line x1="30" y1="42" x2="51" y2="20"/><line x1="30" y1="42" x2="7" y2="31"/>
+        <line x1="30" y1="42" x2="53" y2="31"/>
+      </g>
+      <path d="M14 42a16 16 0 0 1 32 0Z" fill="#c4865b"/>
+      <g stroke="#f4efe5" stroke-width="1.1" fill="none">
+        <path d="M6 52q12 -6 24 0t24 0"/><path d="M6 60q12 -6 24 0t24 0"/>
+      </g>
+    </svg>
+    <span class="name">ITAPUÃ<small>HOTEL</small></span>
+  </a>
+  <nav class="links" aria-label="Principal">
+    <a href="#quartos">Quartos</a>
+    <a href="#comodidades">Comodidades</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#localizacao">Localização</a>
+  </nav>
+  <a class="btn btn-copper nav-cta" href="https://wa.me/5565992149322?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar</a>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-sky" aria-hidden="true">
+    <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="62%" r="55%">
+          <stop offset="0%" stop-color="#c4865b" stop-opacity=".55"/>
+          <stop offset="40%" stop-color="#a86a40" stop-opacity=".12"/>
+          <stop offset="100%" stop-color="#a86a40" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1200" height="760" fill="url(#glow)"/>
+      <g stroke="#c4865b" stroke-width="2" opacity=".7">
+        <line class="ray" x1="600" y1="470" x2="600" y2="120" style="animation-delay:.1s"/>
+        <line class="ray" x1="600" y1="470" x2="470" y2="150" style="animation-delay:.18s"/>
+        <line class="ray" x1="600" y1="470" x2="730" y2="150" style="animation-delay:.18s"/>
+        <line class="ray" x1="600" y1="470" x2="360" y2="215" style="animation-delay:.26s"/>
+        <line class="ray" x1="600" y1="470" x2="840" y2="215" style="animation-delay:.26s"/>
+        <line class="ray" x1="600" y1="470" x2="285" y2="305" style="animation-delay:.34s"/>
+        <line class="ray" x1="600" y1="470" x2="915" y2="305" style="animation-delay:.34s"/>
+        <line class="ray" x1="600" y1="470" x2="250" y2="410" style="animation-delay:.42s"/>
+        <line class="ray" x1="600" y1="470" x2="950" y2="410" style="animation-delay:.42s"/>
+      </g>
+      <path class="sun-disc" d="M470 470a130 130 0 0 1 260 0Z" fill="#c4865b"/>
+      <g fill="none" stroke="#f4efe5" stroke-width="2.4" opacity=".5">
+        <path class="wave w1" d="M-40 520q160 -34 320 0t320 0 320 0 320 0"/>
+        <path class="wave w2" d="M-40 565q160 -34 320 0t320 0 320 0 320 0"/>
+        <path class="wave w3" d="M-40 612q160 -34 320 0t320 0 320 0 320 0"/>
+        <path class="wave w4" d="M-40 662q160 -34 320 0t320 0 320 0 320 0"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <p class="eyebrow">Hospedagem &middot; Conforto &middot; Boa estadia</p>
+    <h1>Hotel <span class="accent">Itapuã</span></h1>
+    <p class="tagline">Quartos climatizados, cama boa e o essencial para descansar. Chegue, acomode-se e fique à vontade.</p>
+    <div class="hero-actions">
+      <a class="btn btn-copper" href="https://wa.me/5565992149322?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2 1.2.9 1.7.8 1.9.7l.6-.7c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.4.1.2.1.9-.1 1.6Z"/></svg>
+        Reservar pelo WhatsApp
+      </a>
+      <a class="btn btn-ghost" href="https://maps.app.goo.gl/xCRR9K4uHhwrL5U68?g_st=ac" target="_blank" rel="noopener">Ver localização</a>
+    </div>
+  </div>
+
+  <div class="rate-strip">
+    <div class="wrap">
+      <a href="#quartos"><span class="t">Casal</span><span class="p"><b>R$160</b> <span>/ diária</span></span></a>
+      <a href="#quartos"><span class="t">Duplo</span><span class="p"><b>R$190</b> <span>/ diária</span></span></a>
+      <a href="#quartos"><span class="t">Triplo</span><span class="p"><b>R$230</b> <span>/ diária</span></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="rooms" id="quartos">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Nossos quartos</p>
+      <h2>Escolha o quarto certo para a sua estadia</h2>
+      <p>Três opções para quem viaja sozinho, em dupla ou em grupo — todas com ar-condicionado, TV e frigobar.</p>
+    </div>
+    <div class="room-grid">
+
+      <article class="room">
+        <div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-couple.jpg" alt="Quarto casal com cama de casal e janela" loading="lazy"></div>
+        <div class="body">
+          <h3>Casal</h3>
+          <p class="fits">Cama de casal &middot; ideal para o casal</p>
+          <div class="price"><span class="v">R$160</span><span class="u">por diária</span></div>
+          <div class="line"></div>
+          <ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul>
+          <div class="res"><a href="https://wa.me/5565992149322?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20o%20quarto%20Casal%20(R%24160)%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Casal</a></div>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-floral-wide.jpg" alt="Quarto duplo com cama de casal e cama de solteiro" loading="lazy"></div>
+        <div class="body">
+          <h3>Duplo</h3>
+          <p class="fits">Cama de casal + solteiro &middot; mais espaço</p>
+          <div class="price"><span class="v">R$190</span><span class="u">por diária</span></div>
+          <div class="line"></div>
+          <ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul>
+          <div class="res"><a href="https://wa.me/5565992149322?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20o%20quarto%20Duplo%20(R%24190)%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Duplo</a></div>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="ph"><span class="tag">Para 3 pessoas</span><img src="img/room-blue-twin.jpg" alt="Quarto triplo com cama de casal e cama de solteiro" loading="lazy"></div>
+        <div class="body">
+          <h3>Triplo</h3>
+          <p class="fits">Cama de casal + solteiro &middot; acomoda 3</p>
+          <div class="price"><span class="v">R$230</span><span class="u">por diária</span></div>
+          <div class="line"></div>
+          <ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul>
+          <div class="res"><a href="https://wa.me/5565992149322?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20o%20quarto%20Triplo%20(R%24230)%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Triplo</a></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amen" id="comodidades">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Comodidades</p>
+      <h2>O que tem em cada quarto</h2>
+      <p>O essencial bem cuidado para você descansar com tranquilidade.</p>
+    </div>
+    <div class="amen-grid">
+      <div class="cell">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
+        <h3>TV</h3><p>Televisão em todos os quartos.</p>
+      </div>
+      <div class="cell">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="5" width="20" height="9" rx="2"/><path d="M5 18c1.5 0 1.5 2 3 2M11 18c1.5 0 1.5 2 3 2M17 18c1.5 0 1.5 2 3 2"/></svg>
+        <h3>Ar-condicionado</h3><p>Climatização para noites confortáveis.</p>
+      </div>
+      <div class="cell">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v1M9 14v2"/></svg>
+        <h3>Frigobar</h3><p>Para manter suas bebidas geladas.</p>
+      </div>
+      <div class="cell">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M6 12V7a2 2 0 0 1 2-2h2v7M20 16v3M4 16v3"/><rect x="4" y="12" width="16" height="4" rx="1"/></svg>
+        <h3>Banheiro</h3><p>Banheiro com chuveiro em cada quarto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galeria">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Galeria</p>
+      <h2>Conheça os ambientes</h2>
+      <p>Quartos limpos e arejados, prontos para receber você.</p>
+    </div>
+    <div class="g-grid">
+      <figure class="big"><img src="img/room-floral-wide.jpg" alt="Quarto amplo com cama de casal e cama de solteiro" loading="lazy"></figure>
+      <figure class="tall"><img src="img/room-couple.jpg" alt="Quarto casal" loading="lazy"></figure>
+      <figure><img src="img/room-blue-twin.jpg" alt="Quarto com duas camas" loading="lazy"></figure>
+      <figure><img src="img/room-floral-twin.jpg" alt="Quarto com cama de casal e solteiro" loading="lazy"></figure>
+      <figure class="tall"><img src="img/room-blue-wide.jpg" alt="Quarto espaçoso" loading="lazy"></figure>
+      <figure><img src="img/room-triple.jpg" alt="Quarto triplo" loading="lazy"></figure>
+      <figure><img src="img/bathroom.jpg" alt="Banheiro do quarto" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="loc" id="localizacao">
+  <div class="wrap">
+    <div class="loc-card">
+      <div class="loc-info">
+        <p class="eyebrow">Localização</p>
+        <h2>Fácil de chegar</h2>
+        <p>Abra o mapa e veja a melhor rota até o Hotel Itapuã.</p>
+        <div class="det">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span>Veja o ponto exato e as rotas no Google Maps.</span>
+        </div>
+        <div class="det">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+          <span>Reservas e dúvidas pelo WhatsApp.</span>
+        </div>
+        <a class="btn btn-copper" href="https://maps.app.goo.gl/xCRR9K4uHhwrL5U68?g_st=ac" target="_blank" rel="noopener">Abrir no Google Maps</a>
+      </div>
+      <div class="loc-map">
+        <a class="map-art" href="https://maps.app.goo.gl/xCRR9K4uHhwrL5U68?g_st=ac" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps">
+          <div class="grid-bg"></div>
+          <div class="pin">
+            <svg viewBox="0 0 24 24" fill="#c4865b" stroke="#fff" stroke-width="1.2"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>
+            <span class="btn btn-ghost map-btn">Ver no mapa</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <h2>Pronto para a sua <span class="accent">estadia</span>?</h2>
+      <div class="foot-rates">
+        <div><div class="t">Casal</div><div class="v">R$160</div></div>
+        <div><div class="t">Duplo</div><div class="v">R$190</div></div>
+        <div><div class="t">Triplo</div><div class="v">R$230</div></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <a class="brand" href="#top">
+        <svg class="mark" viewBox="0 0 60 74" width="28" height="34" aria-hidden="true">
+          <rect x="1" y="1" width="58" height="72" fill="none" stroke="#c4865b" stroke-width="1.4"/>
+          <path d="M14 42a16 16 0 0 1 32 0Z" fill="#c4865b"/>
+          <g stroke="#f4efe5" stroke-width="1.1" fill="none"><path d="M6 52q12 -6 24 0t24 0"/><path d="M6 60q12 -6 24 0t24 0"/></g>
+        </svg>
+        <span class="name">Hotel Itapuã</span>
+      </a>
+      <span>© 2026 Hotel Itapuã · Todos os direitos reservados</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>40);
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body>
+</html>
