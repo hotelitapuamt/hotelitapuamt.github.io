@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hotelitapuamt.github.io/sitemap.xml
