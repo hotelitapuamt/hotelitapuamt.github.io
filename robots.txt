@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /painel/
-Sitemap: https://hotelitapuamt.github.io/sitemap.xml
+Sitemap: https://hotelitapuamt.com.br/sitemap.xml
