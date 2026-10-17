@@ -196,7 +196,7 @@
 
   /* ---------- cliques, rolagem e seções ---------- */
   function waLabel(a) {
-    if (a.classList.contains('nav-cta')) return 'Menu';
+    if (a.classList.contains('nav-cta') || a.closest('.menu')) return 'Menu';
     if (a.closest('.hero')) return 'Topo';
     if (a.closest('.room')) return (a.textContent || '').replace(/^\s*Reservar\s*/i, '').trim() || 'Quarto';
     if (a.closest('footer')) return 'Rodapé';

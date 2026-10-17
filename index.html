@@ -59,6 +59,8 @@
   ]
 }
 </script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 74'%3E%3Crect width='60' height='74' fill='%232c2d31'/%3E%3Cpath d='M14 42a16 16 0 0 1 32 0Z' fill='%23c4865b'/%3E%3Cg stroke='%23f4efe5' stroke-width='2' fill='none'%3E%3Cpath d='M6 52q12-6 24 0t24 0'/%3E%3Cpath d='M6 60q12-6 24 0t24 0'/%3E%3C/g%3E%3C/svg%3E" />
+<script>if('IntersectionObserver' in window)document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -320,9 +322,98 @@
     .wave{stroke-dashoffset:0}
   }
   :focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+
+  /* ---------- REFINO (acessibilidade, contraste, menu mobile, acabamento) ---------- */
+  :root{
+    --ink-soft:#5f5a51;
+    --z-menu:45;--z-nav:50;--z-skip:100;
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  h1,h2,h3{text-wrap:balance}
+  p{text-wrap:pretty}
+  .price .v,.rate-strip .p,.foot-rates .v{font-variant-numeric:tabular-nums}
+  .skip{position:absolute;left:12px;top:-64px;z-index:var(--z-skip);background:var(--ivory);color:var(--ink);padding:11px 18px;border-radius:2px;font-weight:500;transition:top .2s}
+  .skip:focus{top:12px}
+  header.nav{z-index:var(--z-nav)}
+
+  /* contraste: eyebrow em fundo claro, textos pequenos, botão cobre */
+  .eyebrow{letter-spacing:.3em;color:var(--copper-deep)}
+  .hero .eyebrow,.amen .eyebrow{color:var(--copper)}
+  .loc-info .eyebrow{color:var(--sand)}
+  .head p{color:var(--ink-soft)}
+  .room .fits,.room .price .u,.room ul li{color:var(--ink-soft)}
+  .rate-strip .p span{opacity:.78}
+  .btn-copper{color:var(--ink)}
+  .room .res a{color:var(--copper-deep)}
+
+  /* cartões de quarto: sem borda, sombra quente */
+  .room{border:0;box-shadow:0 22px 44px -30px rgba(70,44,24,.5)}
+
+  /* galeria sem buraco */
+  .g-grid{grid-auto-flow:dense}
+  .g-grid .wide{grid-column:span 2}
+
+  /* textura sutil */
+  .hero::after,.amen::before,.menu::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:var(--grain);opacity:.07;mix-blend-mode:overlay}
+  .hero::after{z-index:1}
+  .amen{position:relative}.amen::before{z-index:0}.amen .wrap{position:relative;z-index:1}
+
+  /* rodapé: contato */
+  .foot-contact{margin-top:16px;color:rgba(244,239,229,.72);font-weight:300}
+  .foot-contact a{color:var(--sand);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;font-weight:400}
+  .ht-lnk{margin-left:14px}
+
+  /* menu mobile */
+  .burger{position:relative;width:44px;height:44px;margin:-6px -8px -6px 0;background:none;border:0;border-radius:2px;color:var(--ivory);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .burger i{position:absolute;left:11px;right:11px;height:1.5px;background:currentColor;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .burger i:nth-child(1){top:18px}.burger i:nth-child(2){top:25px}
+  .burger[aria-expanded="true"] i:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+  .burger[aria-expanded="true"] i:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+  .burger:active{opacity:.7}
+  .menu{position:fixed;inset:0;z-index:var(--z-menu);background:var(--ink);color:var(--ivory);display:flex;flex-direction:column;justify-content:center;padding:96px 28px 40px;overflow:hidden;
+        visibility:hidden;opacity:0;transition:opacity .35s ease,visibility 0s .35s}
+  .menu.open{visibility:visible;opacity:1;transition:opacity .35s ease}
+  .menu>*{position:relative;z-index:1}
+  .menu a.l{display:block;font-family:"Marcellus",Georgia,serif;font-size:clamp(1.9rem,8.5vw,2.6rem);line-height:1.1;padding:14px 0;border-bottom:1px solid var(--line);
+        opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i)*60ms + 120ms)}
+  .menu a.l:active{color:var(--sand)}
+  .menu.open a.l{opacity:1;transform:none}
+  .menu .m-cta{margin-top:30px;justify-content:center;width:100%;padding:17px 22px;font-size:.95rem}
+  .menu .m-addr{margin-top:24px;font-size:.85rem;line-height:1.5;color:rgba(244,239,229,.62)}
+  body.menu-open{overflow:hidden}
+
+  /* entrada suave ao rolar (só com JS) */
+  html.js .rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+  html.js .rv.in{opacity:1;transform:none}
+
+  @media (hover:hover) and (pointer:fine){
+    .btn-copper:hover{background:#d29a73;color:var(--ink)}
+    .room .res a:hover{background:var(--copper);color:var(--ink)}
+    .menu a.l:hover{color:var(--sand)}
+  }
+  .room .res a:active{background:var(--copper);color:var(--ink)}
+  .btn-copper:active{background:#d29a73}
+
+  @media(max-width:680px){
+    .burger{display:block}
+    .eyebrow{letter-spacing:.2em;font-size:.68rem}
+    .rate-strip .wrap{flex-direction:row;flex-wrap:nowrap;padding:0 8px}
+    .rate-strip a{flex:1 1 0;min-width:0;flex-direction:column;align-items:flex-start;gap:4px;padding:16px 12px;border-top:0;border-left:1px solid var(--line)}
+    .rate-strip a:first-child{border-left:0}
+    .rate-strip .t{font-size:.78rem;letter-spacing:.1em}
+    .rate-strip .p{margin-left:0;font-size:1rem}
+    .foot-bottom{flex-direction:column}
+    .ht-lnk{margin-left:0;margin-right:14px}
+  }
+  @media(min-width:681px){.menu{display:none}}
+  @media(prefers-reduced-motion:reduce){
+    html.js .rv{opacity:1;transform:none}
+    .menu a.l{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
 
 <!-- NAV -->
 <header class="nav" id="nav">
@@ -349,8 +440,20 @@
     <a href="#localizacao">Localização</a>
   </nav>
   <a class="btn btn-copper nav-cta" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar</a>
+  <button class="burger" type="button" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
 </header>
 
+<!-- MENU MOBILE -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <a class="l" style="--i:0" href="#quartos">Quartos</a>
+  <a class="l" style="--i:1" href="#comodidades">Comodidades</a>
+  <a class="l" style="--i:2" href="#galeria">Galeria</a>
+  <a class="l" style="--i:3" href="#localizacao">Localização</a>
+  <a class="btn btn-copper m-cta" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+  <p class="m-addr">R. Assunção, 133<br>Água Limpa &middot; Várzea Grande - MT</p>
+</div>
+
+<main id="conteudo">
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-sky" aria-hidden="true">
@@ -497,7 +600,7 @@
       <figure class="tall"><img src="img/room-couple.jpg" alt="Quarto casal" loading="lazy"></figure>
       <figure><img src="img/room-blue-twin.jpg" alt="Quarto com duas camas" loading="lazy"></figure>
       <figure><img src="img/room-floral-twin.jpg" alt="Quarto com cama de casal e solteiro" loading="lazy"></figure>
-      <figure class="tall"><img src="img/room-blue-wide.jpg" alt="Quarto espaçoso" loading="lazy"></figure>
+      <figure class="wide"><img src="img/room-blue-wide.jpg" alt="Quarto espaçoso" loading="lazy"></figure>
       <figure><img src="img/room-triple.jpg" alt="Quarto triplo" loading="lazy"></figure>
       <figure><img src="img/bathroom.jpg" alt="Banheiro do quarto" loading="lazy"></figure>
     </div>
@@ -532,11 +635,16 @@
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <h2>Pronto para a sua <span class="accent">estadia</span>?</h2>
+      <div>
+        <h2>Pronto para a sua <span class="accent">estadia</span>?</h2>
+        <p class="foot-contact">Reservas e dúvidas: <a href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">WhatsApp (65) 7400-0781</a></p>
+      </div>
       <div class="foot-rates">
         <div><div class="t">Casal</div><div class="v">R$160</div></div>
         <div><div class="t">Duplo</div><div class="v">R$190</div></div>
@@ -561,6 +669,40 @@
   const nav=document.getElementById('nav');
   const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>40);
   onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  /* menu mobile */
+  (function(){
+    var b=document.getElementById('burger'),m=document.getElementById('menu');
+    if(!b||!m)return;
+    var area=[document.getElementById('conteudo'),document.querySelector('footer')];
+    function set(open){
+      m.classList.toggle('open',open);b.setAttribute('aria-expanded',open?'true':'false');
+      b.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
+      document.body.classList.toggle('menu-open',open);
+      area.forEach(function(el){if(el)el.inert=open;});
+    }
+    b.addEventListener('click',function(){set(!m.classList.contains('open'));});
+    m.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('open')){set(false);b.focus();}});
+    window.addEventListener('resize',function(){if(window.innerWidth>680&&m.classList.contains('open'))set(false);});
+  })();
+
+  /* entrada suave ao rolar */
+  (function(){
+    if(!document.documentElement.classList.contains('js'))return;
+    var els=document.querySelectorAll('.head,.room,.amen-grid .cell,.g-grid figure,.loc-card');
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(!en.isIntersecting)return;io.unobserve(en.target);
+        var t=en.target;t.classList.add('in');
+        setTimeout(function(){t.classList.remove('rv','in');t.style.removeProperty('--d');},1100);
+      });
+    },{threshold:.12});
+    els.forEach(function(el){
+      var i=Array.prototype.indexOf.call(el.parentNode.children,el);
+      el.style.setProperty('--d',Math.min(i,4)*.08+'s');el.classList.add('rv');io.observe(el);
+    });
+  })();
 </script>
 <script src="analytics.js" defer></script>
 </body>
