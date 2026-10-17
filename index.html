@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#2c2d31" />
 <title>Hotel Itapuã — Hotel em Várzea Grande - MT | Diárias a partir de R$160</title>
 <meta name="description" content="Hotel Itapuã em Várzea Grande - MT. Quartos casal, duplo e triplo com ar-condicionado, TV e frigobar. Diárias a partir de R$160. Reserve pelo WhatsApp." />
 <meta name="keywords" content="hotel em Várzea Grande, hotel Várzea Grande MT, hotel Cuiabá, hospedagem Várzea Grande, hotel barato Várzea Grande, diária de hotel, Hotel Itapuã, Água Limpa" />
@@ -74,7 +75,7 @@
     --maxw:1180px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
   body{
     font-family:"Outfit",system-ui,sans-serif;
     color:var(--ink);
@@ -108,7 +109,6 @@
   .brand .name small{display:block;font-size:.58rem;letter-spacing:.46em;color:var(--copper);margin-top:3px}
   nav.links{display:flex;gap:30px;align-items:center}
   nav.links a{color:var(--ivory);font-size:.82rem;letter-spacing:.08em;opacity:.82;transition:.25s}
-  nav.links a:hover{opacity:1;color:var(--sand)}
   .btn{
     display:inline-flex;align-items:center;gap:9px;
     font-size:.84rem;letter-spacing:.06em;font-weight:500;
@@ -116,18 +116,16 @@
     border:1px solid transparent;
   }
   .btn-copper{background:var(--copper);color:#fff}
-  .btn-copper:hover{background:var(--copper-deep);transform:translateY(-1px)}
   .btn-ghost{border-color:var(--line);color:var(--ivory)}
-  .btn-ghost:hover{border-color:var(--sand);background:rgba(244,239,229,.06)}
   .nav-cta{display:inline-flex}
   .burger{display:none}
 
   /* ---------- HERO ---------- */
   .hero{
-    position:relative;min-height:100svh;
+    position:relative;min-height:100svh;padding:0;
     background:linear-gradient(180deg,#2c2d31 0%,#3a3b40 52%,#45403c 100%);
     color:var(--ivory);overflow:hidden;
-    display:flex;align-items:center;
+    display:flex;flex-direction:column;
   }
   .hero::before{
     content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -143,7 +141,7 @@
   .wave.w2{animation-delay:.25s}.wave.w3{animation-delay:.5s}.wave.w4{animation-delay:.75s}
   @keyframes draw{to{stroke-dashoffset:0}}
 
-  .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:96px 28px 48px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
   .hero-inner .eyebrow{animation:fade 1s .3s both}
   .hero h1{
     font-size:clamp(3rem,9.5vw,7rem);line-height:.96;letter-spacing:.04em;
@@ -169,7 +167,6 @@
     border-left:1px solid var(--line);transition:.3s;
   }
   .rate-strip a:first-child{border-left:none}
-  .rate-strip a:hover{background:rgba(196,134,91,.14)}
   .rate-strip .t{font-family:"Marcellus",serif;font-size:1.02rem;letter-spacing:.14em;text-transform:uppercase}
   .rate-strip .p{margin-left:auto;font-size:1.15rem;color:var(--sand)}
   .rate-strip .p b{font-weight:500}
@@ -189,10 +186,8 @@
     box-shadow:0 18px 40px -30px rgba(20,18,16,.4);
     border:1px solid rgba(54,55,59,.07);transition:.35s;
   }
-  .room:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
   .room .ph{aspect-ratio:4/3;overflow:hidden;position:relative}
   .room .ph img{transition:transform .8s ease}
-  .room:hover .ph img{transform:scale(1.06)}
   .room .ph .tag{
     position:absolute;top:14px;left:14px;background:rgba(38,39,42,.82);
     color:var(--ivory);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
@@ -216,7 +211,6 @@
     border:1px solid var(--copper);color:var(--copper-deep);
     font-size:.82rem;letter-spacing:.08em;font-weight:500;transition:.3s;
   }
-  .room .res a:hover{background:var(--copper);color:#fff}
 
   /* ---------- AMENITIES ---------- */
   .amen{background:var(--slate);color:var(--ivory)}
@@ -224,7 +218,6 @@
   .amen .head p{color:rgba(244,239,229,.66)}
   .amen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
   .amen-grid .cell{background:var(--slate);padding:38px 28px;transition:.35s}
-  .amen-grid .cell:hover{background:var(--slate-2)}
   .amen-grid .ic{width:34px;height:34px;color:var(--copper);margin-bottom:18px}
   .amen-grid h3{font-size:1.15rem;letter-spacing:.06em;margin-bottom:7px}
   .amen-grid p{font-size:.86rem;color:rgba(244,239,229,.6);font-weight:300}
@@ -234,7 +227,6 @@
   .g-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px}
   .g-grid figure{overflow:hidden;border-radius:3px;position:relative}
   .g-grid img{transition:transform .9s ease}
-  .g-grid figure:hover img{transform:scale(1.07)}
   .g-grid .big{grid-column:span 2;grid-row:span 2}
   .g-grid .tall{grid-row:span 2}
 
@@ -275,6 +267,32 @@
   .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     margin-top:30px;font-size:.8rem;color:rgba(244,239,229,.5);letter-spacing:.04em}
   .foot-bottom .brand .name{font-size:1rem}
+
+  /* ---------- INTERAÇÃO (toque x mouse) ---------- */
+  /* hover só onde existe mouse; no toque ele ficava "preso" depois do tap */
+  @media (hover:hover) and (pointer:fine){
+  nav.links a:hover{opacity:1;color:var(--sand)}
+  .btn-copper:hover{background:var(--copper-deep);transform:translateY(-1px)}
+  .btn-ghost:hover{border-color:var(--sand);background:rgba(244,239,229,.06)}
+  .rate-strip a:hover{background:rgba(196,134,91,.14)}
+  .room:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .room:hover .ph img{transform:scale(1.06)}
+  .room .res a:hover{background:var(--copper);color:#fff}
+  .amen-grid .cell:hover{background:var(--slate-2)}
+  .g-grid figure:hover img{transform:scale(1.07)}
+  }
+  /* feedback imediato ao tocar (funciona em qualquer entrada) */
+  .btn:active,.rate-strip a:active,.room .res a:active,nav.links a:active{transition-duration:.12s}
+  .btn:active{transform:scale(.97)}
+  .btn-copper:active{background:var(--copper-deep)}
+  .btn-ghost:active{background:rgba(244,239,229,.06);border-color:var(--sand)}
+  .rate-strip a:active{background:rgba(196,134,91,.14)}
+  .room .res a:active{background:var(--copper);color:#fff}
+  nav.links a:active{opacity:1;color:var(--sand)}
+  /* links que funcionam como botão: sem atraso de toque e sem selecionar o texto */
+  .btn,.rate-strip a,.room .res a,nav.links a,.brand{
+    touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  }
 
   @media(max-width:920px){
     .room-grid{grid-template-columns:1fr 1fr}
