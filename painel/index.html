@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#36373b">
+<title>Painel · Hotel Itapuã</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --slate:#36373b;--slate-2:#44464b;--ink:#26272a;
+  --ivory:#f4efe5;--ivory-2:#eae2d4;--sand:#e2d0ba;
+  --copper:#c4865b;--copper-deep:#a86a40;
+  --coastal:#85a6c2;--coastal-deep:#5d7e9c;
+  --green:#5b8a6a;--red:#b4503e;--amber:#b9852f;
+  --muted:#6a665e;--line:rgba(54,55,59,.13);--card:#fff;
+  --shadow:0 14px 34px -24px rgba(20,18,16,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+body{font-family:"Outfit",system-ui,sans-serif;color:var(--ink);background:var(--ivory);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100dvh}
+h1,h2,h3{font-family:"Marcellus",Georgia,serif;font-weight:400;letter-spacing:.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{font-size:16px}
+button{cursor:pointer;touch-action:manipulation}
+a{color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:3px;padding:10px 16px;font-size:.9rem;font-weight:500;letter-spacing:.02em;transition:background .15s,transform .12s,border-color .15s;user-select:none;-webkit-user-select:none;min-height:42px}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--copper);color:#fff}
+.btn-primary:active{background:var(--copper-deep)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-danger{background:transparent;border-color:rgba(180,80,62,.4);color:var(--red)}
+.btn-danger.armed{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-sm{min-height:34px;padding:6px 12px;font-size:.82rem}
+.btn[disabled]{opacity:.5;pointer-events:none}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover{background:var(--copper-deep)}
+  .btn-ghost:hover{border-color:var(--copper);background:rgba(196,134,91,.08)}
+  .nav button:hover{background:rgba(244,239,229,.08)}
+  .card.click:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .rrow:hover{border-color:var(--copper)}
+}
+
+/* ---------- login ---------- */
+.auth{min-height:100dvh;display:grid;place-items:center;padding:24px;background:linear-gradient(180deg,#2c2d31,#3a3b40 60%,#45403c);color:var(--ivory)}
+.auth-card{width:min(420px,100%);background:rgba(244,239,229,.06);border:1px solid rgba(244,239,229,.16);border-radius:4px;padding:34px 28px}
+.auth-card .brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.auth-card h1{font-size:1.5rem;margin-bottom:4px}
+.auth-card p.sub{color:rgba(244,239,229,.65);font-size:.9rem;margin-bottom:22px}
+.auth label{display:block;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sand);margin:14px 0 6px}
+.auth input{width:100%;background:rgba(244,239,229,.08);border:1px solid rgba(244,239,229,.22);border-radius:3px;padding:12px;color:var(--ivory)}
+.auth .btn{width:100%;margin-top:22px}
+.auth .err{margin-top:14px;color:#f0b3a6;font-size:.88rem;min-height:1.3em}
+.mark{width:30px;height:37px;flex:none}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:100dvh}
+.side{background:var(--slate);color:var(--ivory);display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100dvh}
+.side .brand{display:flex;align-items:center;gap:11px;padding:4px 8px 22px}
+.side .brand b{font-family:"Marcellus",serif;font-weight:400;letter-spacing:.12em;font-size:1.05rem;display:block;line-height:1}
+.side .brand small{display:block;font-size:.55rem;letter-spacing:.42em;color:var(--copper);margin-top:3px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{display:flex;align-items:center;gap:12px;background:none;border:0;color:rgba(244,239,229,.78);padding:11px 12px;border-radius:3px;text-align:left;font-size:.95rem;min-height:44px}
+.nav button svg{width:20px;height:20px;flex:none}
+.nav button[aria-current="page"]{background:rgba(196,134,91,.2);color:#fff}
+.who{margin-top:auto;border-top:1px solid rgba(244,239,229,.14);padding:14px 8px 0;font-size:.85rem}
+.who .n{font-weight:500}
+.who .r{color:var(--sand);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase}
+.who button{margin-top:10px;background:none;border:1px solid rgba(244,239,229,.25);color:var(--ivory);border-radius:3px;padding:7px 12px;font-size:.82rem}
+.main{padding:28px clamp(16px,3vw,40px) 60px;min-width:0}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.top h1{font-size:clamp(1.6rem,3.4vw,2.2rem);color:var(--slate)}
+.top p{color:var(--muted);font-size:.92rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;align-items:center;justify-content:space-between;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top))}
+  .side .brand{padding:0}
+  .who{margin:0;border:0;padding:0;display:flex;align-items:center;gap:10px;text-align:right}
+  .who .r{display:none}
+  .who button{margin:0}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;flex-direction:row;background:var(--slate);padding:6px 6px calc(6px + env(safe-area-inset-bottom));border-top:1px solid rgba(244,239,229,.14);justify-content:space-around}
+  .nav button{flex-direction:column;gap:3px;padding:7px 4px;font-size:.66rem;min-height:50px;flex:1;text-align:center;justify-content:center}
+  .main{padding:18px 16px calc(96px + env(safe-area-inset-bottom))}
+}
+
+/* ---------- cartões e listas ---------- */
+.grid{display:grid;gap:14px}
+.stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px;transition:transform .18s,box-shadow .18s}
+.stat .v{font-family:"Marcellus",serif;font-size:2.2rem;line-height:1;color:var(--slate)}
+.stat .l{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.sec{margin:26px 0 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sec h2{font-size:1.25rem;color:var(--slate)}
+.sec span{color:var(--muted);font-size:.85rem}
+.list{display:grid;gap:8px}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 14px;flex-wrap:wrap}
+.item .main-t{flex:1 1 180px;min-width:0}
+.item b{font-weight:500}
+.item small,.muted{color:var(--muted);font-size:.85rem}
+.empty{border:1px dashed rgba(54,55,59,.25);border-radius:4px;padding:26px;text-align:center;color:var(--muted)}
+.empty .btn{margin-top:12px}
+.alert{border-left:4px solid var(--red);background:#fbeeea;padding:12px 14px;border-radius:3px;margin-bottom:10px;font-size:.92rem}
+.alert.warn{border-color:var(--amber);background:#fbf3e1}
+.chip{display:inline-flex;align-items:center;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--ivory-2);color:var(--slate);white-space:nowrap}
+.chip.copper{background:rgba(196,134,91,.18);color:var(--copper-deep)}
+.chip.green{background:rgba(91,138,106,.18);color:#3f6b4e}
+.chip.blue{background:rgba(133,166,194,.28);color:#3d5f7c}
+.chip.gray{background:rgba(54,55,59,.1);color:var(--muted)}
+.chip.red{background:rgba(180,80,62,.15);color:var(--red)}
+
+/* ---------- reservas ---------- */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.filters input,.filters select{background:#fff;border:1px solid var(--line);border-radius:3px;padding:9px 12px;min-height:42px}
+.filters input{flex:1 1 200px}
+.rrow{display:grid;grid-template-columns:minmax(150px,1.4fr) 90px 150px 120px auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 14px;width:100%;text-align:left;transition:border-color .15s}
+.rrow.cancel{opacity:.55}
+.rrow.cancel .g{text-decoration:line-through}
+@media (max-width:820px){.rrow{grid-template-columns:1fr auto;grid-auto-flow:row}.rrow>*:nth-child(n+3){grid-column:1/-1}}
+
+/* ---------- quartos ---------- */
+.rooms{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.room{padding:0;overflow:hidden;text-align:left;display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);border-radius:4px;transition:transform .18s,box-shadow .18s}
+.room .ph{aspect-ratio:4/3;background:var(--ivory-2) center/cover;display:grid;place-items:center;color:var(--muted);font-size:.85rem}
+.room .bd{padding:14px 16px 16px;display:grid;gap:6px}
+.room h3{font-size:1.3rem;color:var(--slate)}
+.room .pr{font-family:"Marcellus",serif;font-size:1.6rem;color:var(--copper-deep)}
+.room .pr small{font-family:"Outfit",sans-serif;font-size:.75rem;color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ---------- calendário ---------- */
+.calbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.calbar h2{font-size:1.4rem;min-width:160px;text-transform:capitalize}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin:0 0 12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.calwrap{overflow:auto;border:1px solid var(--line);border-radius:4px;background:#fff;max-height:calc(100dvh - 260px);min-height:200px}
+.cal{--cw:44px;--rw:110px;width:max-content}
+.cal-row{display:flex;border-bottom:1px solid var(--line)}
+.cal-row:last-child{border-bottom:0}
+.cal-room{position:sticky;left:0;z-index:3;width:var(--rw);flex:none;background:#fff;border-right:1px solid var(--line);padding:6px 10px;display:flex;flex-direction:column;justify-content:center;min-height:44px}
+.cal-room b{font-weight:500;line-height:1.1}
+.cal-room small{color:var(--muted);font-size:.72rem}
+.cal-hd{position:sticky;top:0;z-index:4;background:var(--ivory-2)}
+.cal-hd .cal-room{background:var(--ivory-2);z-index:5}
+.cal-d{width:var(--cw);flex:none;text-align:center;font-size:.72rem;color:var(--muted);padding:4px 0;border-left:1px solid var(--line)}
+.cal-d b{display:block;font-size:.95rem;color:var(--ink);font-weight:500}
+.cal-d.we{background:rgba(54,55,59,.05)}
+.cal-d.today b{color:#fff;background:var(--copper);border-radius:12px;width:26px;margin:0 auto}
+.cal-days{position:relative;display:flex}
+.cal-c{width:var(--cw);flex:none;border-left:1px solid var(--line);background:none;border-top:0;border-right:0;border-bottom:0;min-height:44px;padding:0}
+.cal-c.we{background:rgba(54,55,59,.04)}
+.cal-c.today{background:rgba(196,134,91,.1)}
+.bar{position:absolute;top:6px;height:32px;border:0;border-radius:4px;padding:0 8px;color:#fff;font-size:.78rem;font-weight:500;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;z-index:2}
+.bar.s-confirmada{background:var(--copper)}
+.bar.s-hospedado{background:var(--green)}
+.bar.s-concluida{background:#8d8a82}
+.bar.booking{background:var(--coastal-deep)}
+.bar.manual{background:repeating-linear-gradient(135deg,#8d8a82 0 6px,#a09d95 6px 12px)}
+.bar.conflict{box-shadow:0 0 0 2px var(--red)}
+
+/* ---------- formulários e modal ---------- */
+dialog{border:0;border-radius:6px;padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);box-shadow:0 30px 80px -20px rgba(0,0,0,.55);background:var(--ivory);color:var(--ink);margin:auto}
+dialog::backdrop{background:rgba(20,20,22,.55)}
+.dlg-h{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ivory);z-index:2}
+.dlg-h h2{font-size:1.3rem}
+.dlg-h button{background:none;border:0;font-size:1.6rem;line-height:1;padding:4px 10px;color:var(--muted)}
+.dlg-b{padding:18px 20px 22px;overflow:auto;max-height:calc(100dvh - 90px)}
+.form{display:grid;gap:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld label,.fld .lb{display:block;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fld input,.fld select,.fld textarea{width:100%;background:#fff;border:1px solid rgba(54,55,59,.25);border-radius:3px;padding:10px 12px;min-height:44px}
+.fld textarea{min-height:80px;resize:vertical}
+.fld .hint{font-size:.78rem;color:var(--muted);margin-top:4px}
+.checks{display:flex;gap:8px;flex-wrap:wrap}
+.checks label{display:inline-flex;align-items:center;gap:7px;text-transform:none;letter-spacing:0;font-size:.9rem;color:var(--ink);background:#fff;border:1px solid rgba(54,55,59,.25);border-radius:20px;padding:7px 13px;margin:0;cursor:pointer;user-select:none;-webkit-user-select:none}
+.checks input{width:auto;min-height:0}
+.checks label:has(input:checked){background:rgba(196,134,91,.16);border-color:var(--copper)}
+.switches{display:grid;gap:8px}
+.switches label{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-size:.95rem;color:var(--ink);margin:0}
+.switches input{width:20px;height:20px;min-height:0;accent-color:var(--copper)}
+.form-err{background:#fbeeea;border-left:4px solid var(--red);padding:10px 12px;border-radius:3px;font-size:.9rem}
+.dlg-f{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:6px}
+.dlg-f .r{display:flex;gap:10px;margin-left:auto}
+.photo-prev{aspect-ratio:16/9;background:var(--ivory-2) center/cover;border-radius:3px;display:grid;place-items:center;color:var(--muted);font-size:.85rem;margin-bottom:8px}
+.pick{display:grid;gap:10px}
+.pick .btn{justify-content:flex-start;min-height:54px}
+
+/* ---------- booking / usuarios ---------- */
+.sync-card{display:grid;gap:10px}
+.sync-card .line{display:flex;gap:8px;flex-wrap:wrap}
+.sync-card input{flex:1 1 260px;background:#fff;border:1px solid rgba(54,55,59,.25);border-radius:3px;padding:10px 12px;min-height:42px}
+.status-ok{color:#3f6b4e}.status-err{color:var(--red)}
+details.how{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin-bottom:16px}
+details.how summary{cursor:pointer;font-weight:500}
+details.how ol,details.how ul{margin:10px 0 0 20px;display:grid;gap:6px;font-size:.92rem}
+
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:4px;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100;max-width:calc(100vw - 32px)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast.bad{background:var(--red)}
+@media (min-width:821px){#toast{bottom:24px}}
+.loading{padding:40px;text-align:center;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">Carregando…</div></div>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* =====================  CONFIG  ===================== */
+const SUPABASE_URL = 'https://hayslcuhsqnlatcpllqk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_YmQUUMpw2e7jY-XVtGWSUg_0Yx6N0Ox'; // chave pública (segura no navegador; o acesso é protegido por RLS)
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const TYPES = {casal:'Casal',duplo:'Duplo',triplo:'Triplo',solteiro:'Solteiro',quadruplo:'Quádruplo'};
+const TYPE_DEFAULTS = {
+  casal:{capacity:2,beds:'Cama de casal'}, duplo:{capacity:2,beds:'Cama de casal + solteiro'},
+  triplo:{capacity:3,beds:'Cama de casal + solteiro'}, solteiro:{capacity:1,beds:'Cama de solteiro'},
+  quadruplo:{capacity:4,beds:''}
+};
+const AMENITIES = ['Ar-condicionado','TV','Frigobar','Banheiro','Wi-Fi','Ventilador','Café da manhã','Estacionamento'];
+const SOURCES = {direto:'Direto',whatsapp:'WhatsApp',balcao:'Balcão',booking:'Booking.com',outro:'Outro'};
+const STATUS = {confirmada:'Confirmada',hospedado:'Hospedado',concluida:'Concluída',cancelada:'Cancelada'};
+const STATUS_CHIP = {confirmada:'copper',hospedado:'green',concluida:'gray',cancelada:'red'};
+const ROLES = {admin:'Administrador',recepcao:'Recepção',pendente:'Aguardando liberação'};
+
+/* =====================  ESTADO  ===================== */
+const S = {user:null,profile:null,rooms:[],syncs:[],reservations:[],blocks:[],profiles:[],tab:'hoje',month:null,
+           resFilter:{q:'',status:'ativas'}};
+const isAdmin = () => S.profile && S.profile.role === 'admin';
+
+/* =====================  UTILIDADES  ===================== */
+const $ = (s, r=document) => r.querySelector(s);
+function h(tag, props, ...kids){
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(props||{})){
+    if (v==null || v===false) continue;
+    if (k==='class') e.className = v;
+    else if (k==='style') e.style.cssText = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(), v);
+    else if (k==='value') e.value = v;
+    else if (v===true) e.setAttribute(k,'');
+    else e.setAttribute(k,v);
+  }
+  for (const kid of kids.flat(Infinity)){
+    if (kid==null || kid===false) continue;
+    e.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return e;
+}
+const pad = n => String(n).padStart(2,'0');
+const ymd = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y,m-1,d); };
+const today = () => ymd(new Date());
+const addDays = (s,n) => { const d = parse(s); d.setDate(d.getDate()+n); return ymd(d); };
+const diffDays = (a,b) => Math.round((parse(b)-parse(a))/864e5);
+const fmtD = s => parse(s).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+const fmtDY = s => parse(s).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+const money = n => n==null || n==='' ? '—' : Number(n).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const overlap = (aS,aE,bS,bE) => aS < bE && bS < aE;
+const roomById = id => S.rooms.find(r => r.id===id);
+const roomLabel = r => r ? ('Quarto '+r.number) : 'Quarto removido';
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+const digits = s => (s||'').replace(/\D/g,'');
+
+function toast(msg, bad){
+  const t = $('#toast'); t.textContent = msg; t.className = 'show'+(bad?' bad':'');
+  clearTimeout(toast._t); toast._t = setTimeout(()=>{ t.className=''; }, bad?5200:2600);
+}
+function friendly(e){
+  const m = (e && e.message) || String(e);
+  const c = e && e.code;
+  if (c==='23P01') return 'Já existe uma reserva neste quarto nessas datas.';
+  if (c==='23505') return 'Já existe um registro com esse valor (por exemplo, número de quarto repetido).';
+  if (c==='23503') return 'Este registro está em uso e não pode ser removido.';
+  if (c==='42501') return 'Você não tem permissão para fazer isso.';
+  if (/Invalid login/i.test(m)) return 'E-mail ou senha incorretos.';
+  if (/Failed to fetch|NetworkError/i.test(m)) return 'Sem conexão com o servidor. Verifique a internet.';
+  return m;
+}
+async function run(btn, fn){
+  if (btn) btn.disabled = true;
+  try { return await fn(); }
+  catch(e){ console.error(e); toast(friendly(e), true); }
+  finally { if (btn) btn.disabled = false; }
+}
+
+/* ---- modal ---- */
+const dlg = $('#dlg');
+function openModal(title, body){
+  dlg.replaceChildren(
+    h('div',{class:'dlg-h'}, h('h2',{},title), h('button',{type:'button','aria-label':'Fechar',onclick:closeModal},'×')),
+    h('div',{class:'dlg-b'}, body)
+  );
+  if (!dlg.open) dlg.showModal();
+}
+function closeModal(){ if (dlg.open) dlg.close(); }
+dlg.addEventListener('click', e => { if (e.target===dlg) closeModal(); });
+
+/* ---- campos ---- */
+function fld(label, input, hint){ return h('div',{class:'fld'}, h('label',{},label), input, hint ? h('div',{class:'hint'},hint) : null); }
+function sel(name, opts, value){
+  const s = h('select',{name});
+  for (const [v,l] of opts) s.append(h('option',{value:v}, l));
+  s.value = value; return s;
+}
+
+/* =====================  DADOS  ===================== */
+async function loadAll(){
+  const from = addDays(today(), -120);
+  const [r1,r2,r3,r4] = await Promise.all([
+    sb.from('rooms').select('*').order('sort').order('number'),
+    sb.from('room_sync').select('*'),
+    sb.from('reservations').select('*').gte('check_out', from).order('check_in'),
+    sb.from('blocks').select('*').gte('end_date', from).order('start_date')
+  ]);
+  for (const r of [r1,r2,r3,r4]) if (r.error) throw r.error;
+  S.rooms = r1.data; S.syncs = r2.data; S.reservations = r3.data; S.blocks = r4.data;
+}
+async function reload(){ await loadAll(); render(); }
+
+/* =====================  AUTENTICAÇÃO  ===================== */
+const MARK = () => {
+  const ns='http://www.w3.org/2000/svg', s=document.createElementNS(ns,'svg');
+  s.setAttribute('viewBox','0 0 60 74'); s.setAttribute('class','mark'); s.setAttribute('aria-hidden','true');
+  s.innerHTML='<rect x="1" y="1" width="58" height="72" fill="none" stroke="#c4865b" stroke-width="1.4"/><g stroke="#c4865b" stroke-width="1.1"><line x1="30" y1="42" x2="30" y2="9"/><line x1="30" y1="42" x2="18" y2="12"/><line x1="30" y1="42" x2="42" y2="12"/><line x1="30" y1="42" x2="9" y2="20"/><line x1="30" y1="42" x2="51" y2="20"/></g><path d="M14 42a16 16 0 0 1 32 0Z" fill="#c4865b"/><g stroke="#f4efe5" stroke-width="1.1" fill="none"><path d="M6 52q12 -6 24 0t24 0"/><path d="M6 60q12 -6 24 0t24 0"/></g>';
+  return s;
+};
+
+function renderLogin(msg){
+  closeModal();
+  const err = h('div',{class:'err',role:'alert'}, msg||'');
+  const email = h('input',{type:'email',name:'email',autocomplete:'username',required:true,inputmode:'email',autocapitalize:'none',autocorrect:'off'});
+  const pass = h('input',{type:'password',name:'password',autocomplete:'current-password',required:true});
+  const btn = h('button',{class:'btn btn-primary',type:'submit'},'Entrar');
+  const form = h('form',{onsubmit: async ev => {
+    ev.preventDefault(); err.textContent=''; btn.disabled=true;
+    const {data,error} = await sb.auth.signInWithPassword({email:email.value.trim(),password:pass.value});
+    btn.disabled=false;
+    if (error){ err.textContent = friendly(error); return; }
+    S.user = data.user; await enter();
+  }},
+    h('label',{},'E-mail'), email, h('label',{},'Senha'), pass, btn, err);
+  $('#app').replaceChildren(h('div',{class:'auth'},
+    h('div',{class:'auth-card'},
+      h('div',{class:'brand'}, MARK(), h('div',{}, h('div',{style:'font-family:Marcellus,serif;letter-spacing:.12em'},'ITAPUÃ'), h('div',{style:'font-size:.55rem;letter-spacing:.42em;color:#c4865b'},'HOTEL'))),
+      h('h1',{},'Painel de controle'),
+      h('p',{class:'sub'},'Acesso restrito à equipe do hotel.'),
+      form)));
+  email.focus();
+}
+
+function renderPending(){
+  $('#app').replaceChildren(h('div',{class:'auth'}, h('div',{class:'auth-card'},
+    h('h1',{},'Acesso aguardando liberação'),
+    h('p',{class:'sub'},'Sua conta foi criada, mas ainda não tem permissão. Peça ao administrador do hotel para liberar seu acesso no painel (aba Usuários).'),
+    h('button',{class:'btn btn-ghost',style:'color:#f4efe5;border-color:rgba(244,239,229,.3)',onclick:logout},'Sair'))));
+}
+
+async function logout(){ await sb.auth.signOut(); S.user=null; S.profile=null; renderLogin(); }
+
+async function enter(){
+  $('#app').replaceChildren(h('div',{class:'loading'},'Carregando…'));
+  const {data,error} = await sb.from('profiles').select('*').eq('user_id', S.user.id).maybeSingle();
+  if (error){ toast(friendly(error), true); renderLogin(friendly(error)); return; }
+  S.profile = data;
+  if (!data || data.role==='pendente'){ renderPending(); return; }
+  try { await loadAll(); } catch(e){ toast(friendly(e), true); return renderLogin(friendly(e)); }
+  const n = new Date(); S.month = {y:n.getFullYear(), m:n.getMonth()};
+  renderShell(); go(S.tab);
+}
+
+/* =====================  CASCA / NAVEGAÇÃO  ===================== */
+const ICONS = {
+  hoje:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',
+  calendario:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  reservas:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  quartos:'<path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 18h18M3 14h18M7 9V6h10v3"/>',
+  booking:'<path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-3L4 10M4 14a8 8 0 0 0 14 3l2-3"/>',
+  usuarios:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>'
+};
+function icon(name){
+  const ns='http://www.w3.org/2000/svg', s=document.createElementNS(ns,'svg');
+  s.setAttribute('viewBox','0 0 24 24'); s.setAttribute('fill','none'); s.setAttribute('stroke','currentColor');
+  s.setAttribute('stroke-width','1.7'); s.setAttribute('stroke-linecap','round'); s.setAttribute('stroke-linejoin','round');
+  s.setAttribute('aria-hidden','true'); s.innerHTML = ICONS[name]; return s;
+}
+const TABS = [['hoje','Hoje'],['calendario','Calendário'],['reservas','Reservas'],['quartos','Quartos'],['booking','Booking'],['usuarios','Usuários']];
+
+function renderShell(){
+  const tabs = TABS.filter(([k]) => k!=='usuarios' || isAdmin());
+  const nav = h('nav',{class:'nav','aria-label':'Principal'}, tabs.map(([k,l]) =>
+    h('button',{type:'button',dataset:undefined,'data-tab':k,onclick:()=>go(k)}, icon(k), h('span',{},l))));
+  $('#app').replaceChildren(h('div',{class:'shell'},
+    h('aside',{class:'side'},
+      h('div',{class:'brand'}, MARK(), h('div',{}, h('b',{},'ITAPUÃ'), h('small',{},'PAINEL'))),
+      nav,
+      h('div',{class:'who'}, h('div',{}, h('div',{class:'n'}, S.profile.name || S.profile.email), h('div',{class:'r'}, ROLES[S.profile.role])),
+        h('button',{type:'button',onclick:logout},'Sair'))),
+    h('main',{class:'main',id:'main'})));
+}
+function go(tab){
+  S.tab = tab;
+  document.querySelectorAll('.nav button').forEach(b => b.setAttribute('aria-current', b.dataset.tab===tab ? 'page' : 'false'));
+  render();
+  window.scrollTo(0,0);
+}
+function render(){
+  const m = $('#main'); if (!m) return;
+  const v = {hoje:viewHoje, calendario:viewCalendario, reservas:viewReservas, quartos:viewQuartos, booking:viewBooking, usuarios:viewUsuarios}[S.tab];
+  m.replaceChildren(); Promise.resolve(v(m)).catch(e => { console.error(e); toast(friendly(e), true); });
+}
+function head(title, sub, actions){
+  return h('div',{class:'top'}, h('div',{}, h('h1',{},title), sub ? h('p',{},sub) : null), actions ? h('div',{class:'actions'},actions) : null);
+}
+function noRooms(){
+  return h('div',{class:'empty'}, h('p',{},'Nenhum quarto cadastrado ainda.'),
+    isAdmin() ? h('button',{class:'btn btn-primary',onclick:()=>{go('quartos'); setTimeout(()=>roomForm(null),50);}},'Cadastrar primeiro quarto')
+              : h('p',{class:'muted'},'Peça ao administrador para cadastrar os quartos.'));
+}
+
+/* =====================  DISPONIBILIDADE  ===================== */
+const activeRes = () => S.reservations.filter(r => r.status!=='cancelada');
+function roomBusyOn(roomId, day){
+  const next = addDays(day,1);
+  return activeRes().some(r => r.room_id===roomId && overlap(r.check_in,r.check_out,day,next))
+      || S.blocks.some(b => b.room_id===roomId && overlap(b.start_date,b.end_date,day,next));
+}
+function conflictFor(roomId, ci, co, ignoreId){
+  const r = activeRes().find(x => x.room_id===roomId && x.id!==ignoreId && overlap(x.check_in,x.check_out,ci,co));
+  if (r) return 'Já existe a reserva de '+r.guest_name+' neste quarto ('+fmtD(r.check_in)+' a '+fmtD(r.check_out)+').';
+  const b = S.blocks.find(x => x.room_id===roomId && overlap(x.start_date,x.end_date,ci,co));
+  if (b) return b.source==='booking' ? 'O quarto está reservado no Booking.com nessas datas ('+fmtD(b.start_date)+' a '+fmtD(b.end_date)+').'
+                                      : 'O quarto está bloqueado nessas datas ('+fmtD(b.start_date)+' a '+fmtD(b.end_date)+').';
+  return null;
+}
+function conflicts(){ // reserva direta que bate com reserva do Booking (overbooking)
+  const out = [];
+  for (const r of activeRes()) for (const b of S.blocks) {
+    if (b.source==='booking' && b.room_id===r.room_id && overlap(r.check_in,r.check_out,b.start_date,b.end_date)) out.push({r,b});
+  }
+  return out;
+}
+
+/* =====================  VIEW: HOJE  ===================== */
+function guestLine(r){
+  return h('div',{class:'main-t'},
+    h('b',{},r.guest_name),' ',
+    h('small',{}, roomLabel(roomById(r.room_id))+' · '+fmtD(r.check_in)+' → '+fmtD(r.check_out)+' · '+diffDays(r.check_in,r.check_out)+(diffDays(r.check_in,r.check_out)===1?' diária':' diárias')));
+}
+async function setStatus(r, status, btn){
+  await run(btn, async () => {
+    const {error} = await sb.from('reservations').update({status}).eq('id', r.id);
+    if (error) throw error; toast('Reserva atualizada.'); await reload();
+  });
+}
+function viewHoje(root){
+  const t = today(), active = S.rooms.filter(r=>r.active);
+  root.append(head('Hoje', new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}),
+    h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{})},'+ Nova reserva')));
+  if (!S.rooms.length){ root.append(noRooms()); return; }
+
+  const occupied = active.filter(r => roomBusyOn(r.id,t)).length;
+  const arrivals = activeRes().filter(r => r.check_in===t);
+  const departures = activeRes().filter(r => r.check_out===t);
+  const upcoming = activeRes().filter(r => r.check_in>t && r.check_in<=addDays(t,7)).sort((a,b)=>a.check_in.localeCompare(b.check_in));
+
+  root.append(h('div',{class:'grid stats'},
+    stat(arrivals.length,'Chegadas hoje'), stat(departures.length,'Saídas hoje'),
+    stat(occupied+' / '+active.length,'Quartos ocupados'), stat(active.length-occupied,'Quartos livres')));
+
+  const cf = conflicts();
+  cf.forEach(({r,b}) => root.append(h('div',{class:'alert'}, h('b',{},'Conflito com o Booking: '),
+    r.guest_name+' ('+roomLabel(roomById(r.room_id))+', '+fmtD(r.check_in)+' a '+fmtD(r.check_out)+') coincide com uma reserva do Booking.com ('+fmtD(b.start_date)+' a '+fmtD(b.end_date)+'). Resolva um dos dois.')));
+  S.syncs.filter(s => s.ical_url && s.last_status && s.last_status!=='ok').forEach(s =>
+    root.append(h('div',{class:'alert warn'}, h('b',{},'Falha na sincronização do Booking ('+roomLabel(roomById(s.room_id))+'): '), s.last_status)));
+
+  root.append(section('Chegadas de hoje', arrivals.length), list(arrivals, r =>
+    r.status==='confirmada' ? h('button',{class:'btn btn-primary btn-sm',onclick:e=>setStatus(r,'hospedado',e.currentTarget)},'Check-in feito') : chipFor(r)));
+  root.append(section('Saídas de hoje', departures.length), list(departures, r =>
+    r.status==='hospedado' ? h('button',{class:'btn btn-primary btn-sm',onclick:e=>setStatus(r,'concluida',e.currentTarget)},'Check-out feito') : chipFor(r)));
+  root.append(section('Próximos 7 dias', upcoming.length), list(upcoming, r => chipFor(r)));
+}
+const stat = (v,l) => h('div',{class:'card stat'}, h('div',{class:'v'},v), h('div',{class:'l'},l));
+const chipFor = r => h('span',{class:'chip '+STATUS_CHIP[r.status]}, STATUS[r.status]);
+const section = (t,n) => h('div',{class:'sec'}, h('h2',{},t), h('span',{}, n+(n===1?' reserva':' reservas')));
+function list(rows, action){
+  if (!rows.length) return h('div',{class:'empty',style:'padding:16px'},'Nada por aqui.');
+  return h('div',{class:'list'}, rows.map(r => h('div',{class:'item'}, guestLine(r),
+    r.guest_phone ? h('a',{class:'btn btn-ghost btn-sm',href:'https://wa.me/'+(digits(r.guest_phone).length<=11?'55':'')+digits(r.guest_phone),target:'_blank',rel:'noopener'},'WhatsApp') : null,
+    h('button',{class:'btn btn-ghost btn-sm',onclick:()=>reservationForm(r)},'Abrir'), action(r))));
+}
+
+/* =====================  VIEW: CALENDÁRIO  ===================== */
+function viewCalendario(root){
+  const {y,m} = S.month;
+  const first = y+'-'+pad(m+1)+'-01', dim = new Date(y,m+1,0).getDate(), next = ymd(new Date(y,m+1,1));
+  const t = today(), rooms = S.rooms.filter(r=>r.active);
+  const shift = n => { const d = new Date(y,m+n,1); S.month = {y:d.getFullYear(), m:d.getMonth()}; render(); };
+  root.append(head('Calendário', 'Toque num dia vazio para reservar ou bloquear; toque numa barra para abrir.'));
+  root.append(h('div',{class:'calbar'},
+    h('button',{class:'btn btn-ghost btn-sm','aria-label':'Mês anterior',onclick:()=>shift(-1)},'‹'),
+    h('h2',{}, new Date(y,m,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'})),
+    h('button',{class:'btn btn-ghost btn-sm','aria-label':'Próximo mês',onclick:()=>shift(1)},'›'),
+    h('button',{class:'btn btn-ghost btn-sm',onclick:()=>{const n=new Date();S.month={y:n.getFullYear(),m:n.getMonth()};render();}},'Hoje')));
+  root.append(h('div',{class:'legend'},
+    leg('var(--copper)','Confirmada'), leg('var(--green)','Hospedado'), leg('#8d8a82','Concluída'),
+    leg('var(--coastal-deep)','Booking.com'), leg('repeating-linear-gradient(135deg,#8d8a82 0 4px,#a09d95 4px 8px)','Bloqueio')));
+  if (!rooms.length){ root.append(noRooms()); return; }
+
+  const cw = 44;
+  const dayHead = h('div',{class:'cal-row cal-hd'}, h('div',{class:'cal-room'}, h('small',{},'Quarto')));
+  for (let d=1; d<=dim; d++){
+    const date = y+'-'+pad(m+1)+'-'+pad(d), wd = parse(date).getDay();
+    dayHead.append(h('div',{class:'cal-d'+(wd===0||wd===6?' we':'')+(date===t?' today':'')},
+      h('b',{},d), ['D','S','T','Q','Q','S','S'][wd]));
+  }
+  const cal = h('div',{class:'cal'}, dayHead);
+  for (const room of rooms){
+    const days = h('div',{class:'cal-days'});
+    for (let d=1; d<=dim; d++){
+      const date = y+'-'+pad(m+1)+'-'+pad(d), wd = parse(date).getDay();
+      days.append(h('button',{type:'button',class:'cal-c'+(wd===0||wd===6?' we':'')+(date===t?' today':''),
+        'aria-label':'Quarto '+room.number+', dia '+d, onclick:()=>cellMenu(room,date)}));
+    }
+    const seg = (s,e,cls,label,title,onclick,extra) => {
+      const cs = s<first ? first : s, ce = e>next ? next : e;
+      const idx = diffDays(first,cs), len = diffDays(cs,ce);
+      if (len<=0) return;
+      days.append(h('button',{type:'button',class:'bar '+cls+(extra||''),title,
+        style:'left:'+(idx*cw+2)+'px;width:'+(len*cw-4)+'px',onclick},label));
+    };
+    S.blocks.filter(b => b.room_id===room.id).forEach(b => seg(b.start_date,b.end_date,b.source==='booking'?'booking':'manual',
+      b.source==='booking' ? 'Booking.com' : (b.note||'Bloqueado'), (b.source==='booking'?'Reservado no Booking.com':'Bloqueio')+' · '+fmtD(b.start_date)+' a '+fmtD(b.end_date)+(b.note?' · '+b.note:''), ()=>blockView(b,room)));
+    activeRes().filter(r => r.room_id===room.id).forEach(r => {
+      const bad = S.blocks.some(b => b.source==='booking' && b.room_id===room.id && overlap(r.check_in,r.check_out,b.start_date,b.end_date));
+      seg(r.check_in,r.check_out,'s-'+r.status,r.guest_name,r.guest_name+' · '+fmtD(r.check_in)+' a '+fmtD(r.check_out)+' · '+STATUS[r.status],()=>reservationForm(r),bad?' conflict':'');
+    });
+    cal.append(h('div',{class:'cal-row'}, h('div',{class:'cal-room'}, h('b',{},room.number), h('small',{},TYPES[room.type]||room.type)), days));
+  }
+  root.append(h('div',{class:'calwrap'}, cal));
+}
+const leg = (bg,t) => h('span',{}, h('i',{style:'background:'+bg}), t);
+
+function cellMenu(room, date){
+  openModal(roomLabel(room)+' · '+fmtDY(date), h('div',{class:'pick'},
+    h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{room_id:room.id,check_in:date,check_out:addDays(date,1)})},'Nova reserva'),
+    h('button',{class:'btn btn-ghost',onclick:()=>blockForm(null,{room_id:room.id,start_date:date,end_date:addDays(date,1)})},'Bloquear datas (manutenção, uso próprio)')));
+}
+
+/* ---- bloqueios ---- */
+function blockView(b, room){
+  if (b.source==='booking'){
+    openModal('Reserva do Booking.com', h('div',{class:'form'},
+      h('p',{}, roomLabel(room)+' · '+fmtDY(b.start_date)+' a '+fmtDY(b.end_date)+' (liberado no dia '+fmtD(b.end_date)+')'),
+      b.note ? h('p',{class:'muted'}, b.note) : null,
+      h('p',{class:'muted'},'Vem automaticamente do Booking.com e não pode ser editada aqui. Para alterar, use a extranet do Booking.')));
+  } else blockForm(b);
+}
+function blockForm(b, defaults){
+  const d = b || defaults || {};
+  const err = h('div',{class:'form-err',hidden:true});
+  const f = h('form',{class:'form'});
+  const room = sel('room_id', S.rooms.filter(r=>r.active||r.id===d.room_id).map(r=>[r.id,roomLabel(r)+' — '+(TYPES[r.type]||r.type)]), d.room_id||S.rooms[0]?.id);
+  const s = h('input',{type:'date',name:'start',required:true,value:d.start_date||today()});
+  const e = h('input',{type:'date',name:'end',required:true,value:d.end_date ? addDays(d.end_date,-1) : (d.start_date||today())});
+  const note = h('input',{type:'text',name:'note',maxlength:'120',value:d.note||'',placeholder:'Ex.: manutenção do ar-condicionado'});
+  const del = b ? h('button',{type:'button',class:'btn btn-danger',onclick:ev=>confirmDelete(ev.currentTarget,async()=>{
+      const {error}=await sb.from('blocks').delete().eq('id',b.id); if(error) throw error; closeModal(); toast('Bloqueio removido.'); await reload(); })},'Remover') : h('span');
+  f.append(fld('Quarto',room), h('div',{class:'row2'}, fld('Primeiro dia bloqueado',s), fld('Último dia bloqueado',e)), fld('Motivo (opcional)',note), err,
+    h('div',{class:'dlg-f'}, del, h('div',{class:'r'}, h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Cancelar'), h('button',{type:'submit',class:'btn btn-primary'},'Salvar'))));
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault(); err.hidden = true;
+    if (e.value < s.value){ err.textContent='O último dia não pode ser antes do primeiro.'; err.hidden=false; return; }
+    const payload = {room_id:room.value,start_date:s.value,end_date:addDays(e.value,1),note:note.value.trim()||null,source:'manual'};
+    const c = conflictFor(payload.room_id,payload.start_date,payload.end_date,null);
+    const own = b && S.blocks.find(x=>x.id===b.id);
+    if (c && !(own && /bloqueado/.test(c) && !activeRes().some(r=>r.room_id===payload.room_id && overlap(r.check_in,r.check_out,payload.start_date,payload.end_date)) && S.blocks.filter(x=>x.id!==b.id && x.room_id===payload.room_id && overlap(x.start_date,x.end_date,payload.start_date,payload.end_date)).length===0)){
+      err.textContent=c; err.hidden=false; return; }
+    await run(f.querySelector('[type=submit]'), async () => {
+      const q = b ? sb.from('blocks').update(payload).eq('id',b.id) : sb.from('blocks').insert(payload);
+      const {error} = await q; if (error) throw error;
+      closeModal(); toast('Bloqueio salvo.'); await reload();
+    });
+  });
+  openModal(b?'Editar bloqueio':'Bloquear datas', f);
+}
+function confirmDelete(btn, fn){
+  if (!btn.classList.contains('armed')){
+    btn.classList.add('armed'); btn.textContent='Toque de novo para confirmar';
+    setTimeout(()=>{ btn.classList.remove('armed'); btn.textContent='Remover'; }, 4000); return;
+  }
+  run(btn, fn);
+}
+
+/* =====================  RESERVAS (formulário)  ===================== */
+function reservationForm(r, defaults){
+  const d = r || defaults || {};
+  const act = S.rooms.filter(x => x.active || x.id===d.room_id);
+  if (!act.length){ toast('Cadastre um quarto antes de criar reservas.', true); return; }
+  const err = h('div',{class:'form-err',hidden:true});
+  const f = h('form',{class:'form'});
+  const room = sel('room_id', act.map(x=>[x.id,roomLabel(x)+' — '+(TYPES[x.type]||x.type)+' · '+money(x.price)]), d.room_id||act[0].id);
+  const name = h('input',{name:'guest_name',required:true,maxlength:'120',value:d.guest_name||'',autocomplete:'off'});
+  const phone = h('input',{name:'guest_phone',type:'tel',inputmode:'tel',maxlength:'30',value:d.guest_phone||'',placeholder:'(65) 99999-9999'});
+  const count = h('input',{name:'guest_count',type:'number',min:'1',max:'12',value:d.guest_count||1});
+  const ci = h('input',{name:'check_in',type:'date',required:true,value:d.check_in||today()});
+  const co = h('input',{name:'check_out',type:'date',required:true,value:d.check_out||addDays(d.check_in||today(),1)});
+  const total = h('input',{name:'total',type:'number',min:'0',step:'0.01',inputmode:'decimal',value:d.total??''});
+  const paid = h('input',{name:'paid',type:'number',min:'0',step:'0.01',inputmode:'decimal',value:d.paid??0});
+  const source = sel('source', Object.entries(SOURCES).filter(([k])=>k!=='booking' || d.source==='booking'), d.source||'direto');
+  const status = sel('status', Object.entries(STATUS), d.status||'confirmada');
+  const notes = h('textarea',{name:'notes',maxlength:'500'}, d.notes||'');
+  let manualTotal = !!r;
+  total.addEventListener('input', () => { manualTotal = true; });
+  const nightsInfo = h('div',{class:'hint'});
+  const recalc = () => {
+    const n = ci.value && co.value ? diffDays(ci.value, co.value) : 0, rm = roomById(room.value);
+    nightsInfo.textContent = n>0 ? n+(n===1?' diária':' diárias')+(rm?' × '+money(rm.price)+' = '+money(n*rm.price):'') : 'Confira as datas.';
+    if (!manualTotal && n>0 && rm) total.value = (n*rm.price).toFixed(2);
+  };
+  [room,ci,co].forEach(x => x.addEventListener('change', recalc));
+  ci.addEventListener('change', () => { if (co.value <= ci.value) { co.value = addDays(ci.value,1); recalc(); } });
+  recalc();
+
+  const wa = r && r.guest_phone ? h('a',{class:'btn btn-ghost',href:'https://wa.me/'+(digits(r.guest_phone).length<=11?'55':'')+digits(r.guest_phone),target:'_blank',rel:'noopener'},'WhatsApp') : null;
+  const del = r && isAdmin() ? h('button',{type:'button',class:'btn btn-danger',onclick:ev=>confirmDelete(ev.currentTarget,async()=>{
+      const {error}=await sb.from('reservations').delete().eq('id',r.id); if(error) throw error; closeModal(); toast('Reserva excluída.'); await reload(); })},'Remover') : null;
+  f.append(fld('Quarto',room), fld('Nome do hóspede',name),
+    h('div',{class:'row2'}, fld('Telefone / WhatsApp',phone), fld('Pessoas',count)),
+    h('div',{class:'row2'}, fld('Entrada (check-in)',ci), fld('Saída (check-out)',co)), nightsInfo,
+    h('div',{class:'row2'}, fld('Valor total (R$)',total), fld('Já pago (R$)',paid)),
+    h('div',{class:'row2'}, fld('Origem',source), fld('Situação',status)),
+    fld('Observações',notes), err,
+    h('div',{class:'dlg-f'}, h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},del,wa), h('div',{class:'r'},
+      h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Cancelar'), h('button',{type:'submit',class:'btn btn-primary'},r?'Salvar':'Criar reserva'))));
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault(); err.hidden = true;
+    if (co.value <= ci.value){ err.textContent='A saída precisa ser depois da entrada.'; err.hidden=false; return; }
+    const payload = {room_id:room.value,guest_name:name.value.trim(),guest_phone:phone.value.trim()||null,guest_count:Number(count.value)||1,
+      check_in:ci.value,check_out:co.value,total:total.value===''?null:Number(total.value),paid:Number(paid.value)||0,
+      source:source.value,status:status.value,notes:notes.value.trim()||null};
+    if (payload.status!=='cancelada'){
+      const c = conflictFor(payload.room_id,payload.check_in,payload.check_out,r&&r.id);
+      if (c){ err.textContent=c; err.hidden=false; return; }
+    }
+    await run(f.querySelector('[type=submit]'), async () => {
+      const q = r ? sb.from('reservations').update(payload).eq('id',r.id) : sb.from('reservations').insert(payload);
+      const {error} = await q; if (error) throw error;
+      closeModal(); toast(r?'Reserva atualizada.':'Reserva criada.'); await reload();
+    });
+  });
+  openModal(r?'Reserva de '+r.guest_name:'Nova reserva', f);
+  if (!r) name.focus();
+}
+
+/* =====================  VIEW: RESERVAS  ===================== */
+function viewReservas(root){
+  root.append(head('Reservas','Reservas diretas (WhatsApp, balcão). As do Booking.com aparecem no calendário.',
+    h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{})},'+ Nova reserva')));
+  const q = h('input',{type:'search',placeholder:'Buscar por nome ou telefone',value:S.resFilter.q,'aria-label':'Buscar'});
+  const st = h('select',{'aria-label':'Situação'});
+  [['ativas','Ativas (confirmadas e hospedados)'],['futuras','Próximas chegadas'],['todas','Todas'],['concluida','Concluídas'],['cancelada','Canceladas']]
+    .forEach(([v,l]) => st.append(h('option',{value:v},l)));
+  st.value = S.resFilter.status;
+  const box = h('div',{class:'list'});
+  const paint = () => {
+    S.resFilter = {q:q.value,status:st.value};
+    const t = today(), term = q.value.trim().toLowerCase();
+    let rows = S.reservations.filter(r => {
+      if (st.value==='ativas' && !['confirmada','hospedado'].includes(r.status)) return false;
+      if (st.value==='futuras' && !(r.check_in>=t && r.status==='confirmada')) return false;
+      if (['concluida','cancelada'].includes(st.value) && r.status!==st.value) return false;
+      if (term && !((r.guest_name||'').toLowerCase().includes(term) || digits(r.guest_phone).includes(digits(term)) && digits(term))) return false;
+      return true;
+    }).sort((a,b)=>b.check_in.localeCompare(a.check_in));
+    if (st.value==='ativas'||st.value==='futuras') rows.reverse();
+    box.replaceChildren(...(rows.length ? rows.map(resRow) : [h('div',{class:'empty'},'Nenhuma reserva encontrada.')]));
+  };
+  q.addEventListener('input',paint); st.addEventListener('change',paint);
+  root.append(h('div',{class:'filters'},q,st), box); paint();
+}
+function resRow(r){
+  const n = diffDays(r.check_in,r.check_out), due = (r.total||0)-(r.paid||0);
+  return h('button',{type:'button',class:'rrow'+(r.status==='cancelada'?' cancel':''),onclick:()=>reservationForm(r)},
+    h('div',{}, h('b',{class:'g'},r.guest_name), h('div',{class:'muted'}, r.guest_phone||'sem telefone')),
+    h('div',{}, h('b',{},roomLabel(roomById(r.room_id)).replace('Quarto ','Qto ')), h('div',{class:'muted'},SOURCES[r.source]||r.source)),
+    h('div',{}, fmtDY(r.check_in)+' → '+fmtDY(r.check_out), h('div',{class:'muted'}, n+(n===1?' diária':' diárias'))),
+    h('div',{}, money(r.total), r.total!=null && due>0 && r.status!=='cancelada' ? h('div',{class:'muted',style:'color:var(--amber)'},'Falta '+money(due)) : h('div',{class:'muted'}, r.total!=null?'Pago':'')),
+    chipFor(r));
+}
+
+/* =====================  VIEW: QUARTOS  ===================== */
+function viewQuartos(root){
+  root.append(head('Quartos','Cadastro dos quartos do hotel. Os marcados como “Mostrar no site” aparecem com preço atualizado no site.',
+    isAdmin() ? h('button',{class:'btn btn-primary',onclick:()=>roomForm(null)},'+ Novo quarto') : null));
+  if (!S.rooms.length){ root.append(noRooms()); return; }
+  root.append(h('div',{class:'grid rooms'}, S.rooms.map(r =>
+    h('button',{type:'button',class:'room card click',style:'padding:0',onclick:()=>isAdmin()?roomForm(r):roomInfo(r)},
+      h('div',{class:'ph',style:r.photo_url?'background-image:url("'+r.photo_url.replace(/"/g,'%22')+'")':''}, r.photo_url?'':'Sem foto'),
+      h('div',{class:'bd'},
+        h('h3',{},'Quarto '+r.number+(r.name?' · '+r.name:'')),
+        h('div',{class:'muted'}, (TYPES[r.type]||r.type)+' · até '+r.capacity+(r.capacity===1?' pessoa':' pessoas')+(r.beds?' · '+r.beds:'')),
+        h('div',{class:'pr'}, money(r.price), h('small',{},' / diária')),
+        h('div',{class:'chips'},
+          h('span',{class:'chip '+(r.active?'green':'gray')}, r.active?'Ativo':'Inativo'),
+          r.show_on_site ? h('span',{class:'chip blue'},'No site') : null))))));
+}
+function roomInfo(r){
+  openModal('Quarto '+r.number, h('div',{class:'form'},
+    h('p',{}, (TYPES[r.type]||r.type)+' · '+money(r.price)+' / diária'), h('p',{class:'muted'},(r.amenities||[]).join(' · ')),
+    r.description?h('p',{},r.description):null, h('p',{class:'muted'},'Apenas o administrador edita quartos e preços.')));
+}
+async function resizeImage(file, max){
+  const bmp = await createImageBitmap(file);
+  const k = Math.min(1, max/Math.max(bmp.width,bmp.height));
+  const c = document.createElement('canvas'); c.width = Math.round(bmp.width*k); c.height = Math.round(bmp.height*k);
+  c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+  return await new Promise(res => c.toBlob(res,'image/jpeg',.85));
+}
+function roomForm(r){
+  const d = r || {};
+  const err = h('div',{class:'form-err',hidden:true});
+  const f = h('form',{class:'form'});
+  const num = h('input',{name:'number',required:true,maxlength:'20',value:d.number||'',placeholder:'Ex.: 101'});
+  const name = h('input',{name:'name',maxlength:'60',value:d.name||'',placeholder:'Opcional'});
+  const type = sel('type', Object.entries(TYPES), d.type||'casal');
+  const capacity = h('input',{name:'capacity',type:'number',min:'1',max:'12',required:true,value:d.capacity||2});
+  const beds = h('input',{name:'beds',maxlength:'80',value:d.beds ?? 'Cama de casal'});
+  const price = h('input',{name:'price',type:'number',min:'0',step:'0.01',inputmode:'decimal',required:true,value:d.price??''});
+  const desc = h('textarea',{name:'description',maxlength:'400'}, d.description||'');
+  let touched = !!r;
+  [capacity,beds].forEach(x => x.addEventListener('input',()=>{touched=true;}));
+  type.addEventListener('change',()=>{ if(!touched){ const t=TYPE_DEFAULTS[type.value]; capacity.value=t.capacity; beds.value=t.beds; } });
+  const chosen = new Set(d.amenities || ['Ar-condicionado','TV','Frigobar','Banheiro']);
+  const extra = [...chosen].filter(a => !AMENITIES.includes(a));
+  const am = h('div',{class:'checks'}, [...AMENITIES,...extra].map(a => h('label',{}, h('input',{type:'checkbox',value:a,checked:chosen.has(a)}), a)));
+  const active = h('input',{type:'checkbox',checked:d.active!==false});
+  const site = h('input',{type:'checkbox',checked:d.show_on_site!==false});
+  const file = h('input',{type:'file',accept:'image/jpeg,image/png,image/webp'});
+  const prev = h('div',{class:'photo-prev',style:d.photo_url?'background-image:url("'+d.photo_url+'")':''}, d.photo_url?'':'Sem foto');
+  file.addEventListener('change', () => { const x = file.files[0]; if (x){ prev.style.backgroundImage='url("'+URL.createObjectURL(x)+'")'; prev.textContent=''; } });
+  const del = r ? h('button',{type:'button',class:'btn btn-danger',onclick:ev=>confirmDelete(ev.currentTarget,async()=>{
+      const {error}=await sb.from('rooms').delete().eq('id',r.id);
+      if (error) throw (error.code==='23503' ? {code:'23503',message:'Este quarto tem reservas. Marque-o como inativo em vez de remover.'} : error);
+      closeModal(); toast('Quarto removido.'); await reload(); })},'Remover') : h('span');
+  f.append(
+    h('div',{class:'row2'}, fld('Número do quarto',num), fld('Nome (opcional)',name)),
+    h('div',{class:'row2'}, fld('Tipo',type), fld('Capacidade',capacity)),
+    fld('Camas',beds), fld('Preço da diária (R$)',price),
+    h('div',{class:'fld'}, h('div',{class:'lb'},'Comodidades'), am),
+    fld('Descrição (opcional)',desc),
+    h('div',{class:'fld'}, h('div',{class:'lb'},'Foto'), prev, file, h('div',{class:'hint'},'JPG, PNG ou WebP. A foto é reduzida automaticamente.')),
+    h('div',{class:'switches'}, h('label',{},active,'Quarto ativo (aparece no calendário e aceita reservas)'), h('label',{},site,'Mostrar no site do hotel')),
+    err,
+    h('div',{class:'dlg-f'}, del, h('div',{class:'r'}, h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Cancelar'), h('button',{type:'submit',class:'btn btn-primary'},'Salvar'))));
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault(); err.hidden = true;
+    await run(f.querySelector('[type=submit]'), async () => {
+      let photo_url = d.photo_url || null;
+      if (file.files[0]){
+        const blob = await resizeImage(file.files[0], 1600);
+        const path = crypto.randomUUID()+'.jpg';
+        const up = await sb.storage.from('quartos').upload(path, blob, {contentType:'image/jpeg',cacheControl:'31536000'});
+        if (up.error) throw up.error;
+        photo_url = sb.storage.from('quartos').getPublicUrl(path).data.publicUrl;
+        if (d.photo_url && d.photo_url.includes('/quartos/')) sb.storage.from('quartos').remove([decodeURIComponent(d.photo_url.split('/quartos/').pop())]);
+      }
+      const payload = {number:num.value.trim(),name:name.value.trim()||null,type:type.value,capacity:Number(capacity.value),beds:beds.value.trim()||null,
+        price:Number(price.value),description:desc.value.trim()||null,photo_url,
+        amenities:[...am.querySelectorAll('input:checked')].map(i=>i.value),active:active.checked,show_on_site:site.checked};
+      const q = r ? sb.from('rooms').update(payload).eq('id',r.id) : sb.from('rooms').insert(payload);
+      const {error} = await q; if (error) throw error;
+      closeModal(); toast('Quarto salvo.'); await reload();
+    });
+  });
+  openModal(r?'Quarto '+r.number:'Novo quarto', f);
+}
+
+/* =====================  VIEW: BOOKING  ===================== */
+function viewBooking(root){
+  root.append(head('Booking.com','Traz as reservas feitas no Booking.com para o calendário e bloqueia os quartos automaticamente.',
+    h('button',{class:'btn btn-primary',onclick:async e=>syncNow(null,e.currentTarget)},'Sincronizar todos agora')));
+  root.append(h('details',{class:'how'}, h('summary',{},'Como conectar'),
+    h('ol',{},
+      h('li',{},'Na extranet do Booking.com, procure a opção de sincronizar calendários (“Calendar sync”) e copie o link de exportação (iCal) do quarto ou tipo de quarto.'),
+      h('li',{},'Cole o link no quarto correspondente abaixo e clique em Salvar link.'),
+      h('li',{},'Clique em Sincronizar agora para testar. Depois disso, o painel confere sozinho a cada 30 minutos.')),
+    h('ul',{},
+      h('li',{},'Só as datas reservadas vêm do Booking. Preços e disponibilidade no Booking continuam sendo editados na extranet deles.'),
+      h('li',{},'Reservas feitas aqui no painel ainda não são enviadas ao Booking. Feche essas datas também na extranet para evitar venda dobrada.'),
+      h('li',{},'O Booking costuma levar algum tempo para atualizar o link, então pode haver atraso de algumas horas.'))));
+  const rooms = S.rooms;
+  if (!rooms.length){ root.append(noRooms()); return; }
+  root.append(h('div',{class:'grid'}, rooms.map(room => syncCard(room))));
+}
+function syncCard(room){
+  const s = S.syncs.find(x => x.room_id===room.id) || {};
+  const url = h('input',{type:'url',placeholder:'https://ical.booking.com/v1/export?t=…',value:s.ical_url||'',disabled:!isAdmin(),autocomplete:'off',autocapitalize:'none',spellcheck:'false','aria-label':'Link iCal do quarto '+room.number});
+  const ok = s.last_status==='ok';
+  const status = h('div',{class:'muted'+(s.ical_url?(ok?' status-ok':' status-err'):'')},
+    !s.ical_url ? 'Sem link configurado.' :
+    !s.last_sync_at ? 'Ainda não sincronizado.' :
+    'Última sincronização: '+new Date(s.last_sync_at).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' — '+(ok ? (s.last_count||0)+' período(s) bloqueado(s)' : s.last_status));
+  const save = h('button',{class:'btn btn-ghost',onclick:e=>run(e.currentTarget,async()=>{
+    const v = url.value.trim();
+    if (v && !/^https:\/\/([a-z0-9-]+\.)*booking\.com\//i.test(v)){ toast('Use o link de calendário (iCal) do Booking.com, começando com https://', true); return; }
+    const {error} = await sb.from('room_sync').upsert({room_id:room.id,ical_url:v||null}); if (error) throw error;
+    toast(v?'Link salvo.':'Link removido.'); await reload(); })},'Salvar link');
+  const now = h('button',{class:'btn btn-primary',disabled:!s.ical_url,onclick:e=>syncNow(room.id,e.currentTarget)},'Sincronizar agora');
+  return h('div',{class:'card sync-card'},
+    h('div',{style:'display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap'}, h('b',{},'Quarto '+room.number+(room.name?' · '+room.name:'')), h('span',{class:'chip gray'},TYPES[room.type]||room.type)),
+    h('div',{class:'line'}, url, isAdmin()?save:null, now), status);
+}
+async function syncNow(roomId, btn){
+  await run(btn, async () => {
+    const {data,error} = await sb.rpc('sync_booking_ical', roomId ? {p_room:roomId} : {});
+    if (error) throw error;
+    await reload();
+    if (!data || !data.length) { toast('Nenhum quarto com link configurado.', true); return; }
+    const bad = data.filter(x => x.status!=='ok');
+    if (bad.length) toast('Quarto '+bad[0].quarto+': '+bad[0].status, true); else toast('Sincronizado com o Booking.com.');
+  });
+}
+
+/* =====================  VIEW: USUÁRIOS  ===================== */
+async function viewUsuarios(root){
+  root.append(head('Usuários','Quem pode entrar no painel e o que pode fazer.'));
+  root.append(h('details',{class:'how',open:true}, h('summary',{},'Como adicionar alguém da equipe'),
+    h('ol',{},
+      h('li',{},'No Supabase (Authentication → Users), clique em Add user → Create new user, informe e-mail e senha e marque Auto Confirm User.'),
+      h('li',{},'Volte aqui: a pessoa aparece abaixo como “Aguardando liberação”. Escolha Recepção (reservas e calendário) ou Administrador (também quartos, preços e usuários).'))));
+  const box = h('div',{class:'list'}, h('div',{class:'loading'},'Carregando…')); root.append(box);
+  const {data,error} = await sb.from('profiles').select('*').order('created_at'); if (error) throw error;
+  S.profiles = data;
+  box.replaceChildren(...data.map(p => {
+    const me = p.user_id===S.user.id;
+    const s = sel('role',Object.entries(ROLES),p.role); s.disabled = me; s.style.cssText='min-height:42px;border:1px solid var(--line);border-radius:3px;padding:6px 10px;background:#fff';
+    s.addEventListener('change', () => run(s, async()=>{
+      const {error} = await sb.from('profiles').update({role:s.value}).eq('user_id',p.user_id); if (error) throw error; toast('Permissão atualizada.'); }));
+    return h('div',{class:'item'}, h('div',{class:'main-t'}, h('b',{},p.name||p.email), me?' (você)':'', h('div',{class:'muted'},p.email)),
+      p.role==='pendente'?h('span',{class:'chip copper'},'Novo'):null, s);
+  }));
+}
+
+/* =====================  INÍCIO  ===================== */
+async function boot(){
+  const {data:{session}} = await sb.auth.getSession();
+  if (!session){ renderLogin(); return; }
+  S.user = session.user; await enter();
+}
+sb.auth.onAuthStateChange((ev) => { if (ev==='SIGNED_OUT') setTimeout(renderLogin,0); });
+boot().catch(e => { console.error(e); renderLogin(friendly(e)); });
+window.__painel = {S}; // facilita testes
+})();
+</script>
+</body>
+</html>
