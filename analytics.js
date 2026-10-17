@@ -197,6 +197,7 @@
   /* ---------- cliques, rolagem e seções ---------- */
   function waLabel(a) {
     if (a.classList.contains('nav-cta') || a.closest('.menu')) return 'Menu';
+    if (a.classList.contains('fab')) return 'Flutuante';
     if (a.closest('.hero')) return 'Topo';
     if (a.closest('.room')) return (a.textContent || '').replace(/^\s*Reservar\s*/i, '').trim() || 'Quarto';
     if (a.closest('footer')) return 'Rodapé';
@@ -210,6 +211,11 @@
     else if (/maps\.app\.goo\.gl|google\.[a-z.]+\/maps|goo\.gl\/maps/i.test(h)) track('map_click', 'mapa');
     else if (a.closest('.rate-strip')) track('room_click', ((a.querySelector('.t') || {}).textContent || '').trim());
     else if (a.getAttribute('data-ht') === 'cookies') { e.preventDefault(); banner(); }
+  }, true);
+
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('button[data-room]') : null;
+    if (b) track('room_click', (b.firstChild && b.firstChild.textContent || '').trim());
   }, true);
 
   var fired = {};
