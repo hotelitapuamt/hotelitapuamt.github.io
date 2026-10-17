@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#2c2d31" />
+<title>Política de privacidade — Hotel Itapuã</title>
+<meta name="description" content="Como o Hotel Itapuã trata dados e cookies no site." />
+<meta name="robots" content="noindex" />
+<style>
+  :root{--ink:#2c2d31;--cream:#f4efe5;--copper:#c4865b}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{background:var(--ink);color:var(--cream);padding:18px 20px}
+  header a{color:var(--cream);text-decoration:none;font-weight:600;letter-spacing:.04em}
+  main{max-width:720px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:1.9rem;line-height:1.2;margin:0 0 6px}
+  h2{font-size:1.2rem;margin:32px 0 6px}
+  p,li{margin:0 0 10px}
+  ul{padding-left:20px}
+  .muted{opacity:.7;font-size:.95rem}
+  a{color:#9a5f38}
+  button{min-height:44px;padding:0 18px;border-radius:4px;border:1px solid var(--ink);background:transparent;color:inherit;font:inherit;cursor:pointer;touch-action:manipulation}
+  button:active{transform:scale(.97)}
+</style>
+</head>
+<body>
+<header><a href="../">← HOTEL ITAPUÃ</a></header>
+<main>
+  <h1>Política de privacidade</h1>
+  <p class="muted">Última atualização: outubro de 2026</p>
+
+  <h2>Quem somos</h2>
+  <p>Hotel Itapuã — R. Assunção, 133, Água Limpa, Várzea Grande - MT. Contato pelo WhatsApp (65) 7400-0781.</p>
+
+  <h2>O que coletamos neste site</h2>
+  <ul>
+    <li><b>Estatísticas próprias, sem identificar você:</b> contamos visitas e cliques (por exemplo, no botão do WhatsApp), a página, o tipo de aparelho (celular ou computador) e de onde você veio (Google, Instagram etc.). Não usamos cookies para isso, não guardamos seu IP nem seu nome.</li>
+    <li><b>Cookies de medição e anúncios (somente se você aceitar):</b> ferramentas do Google (Analytics e Ads) e da Meta (Pixel do Facebook e Instagram) para medir resultados e mostrar anúncios do hotel. Se você recusar, o Pixel da Meta não é carregado e os cookies do Google ficam desativados.</li>
+    <li><b>WhatsApp:</b> ao tocar em “Reservar”, você abre uma conversa no WhatsApp com o hotel. O que você escrever lá é tratado para atender sua reserva, conforme os termos do próprio WhatsApp.</li>
+  </ul>
+
+  <h2>Para que usamos</h2>
+  <p>Entender quais páginas ajudam os hóspedes, melhorar o site, medir anúncios e responder pedidos de reserva.</p>
+
+  <h2>Seus direitos (LGPD)</h2>
+  <p>Você pode pedir acesso, correção ou exclusão dos seus dados e retirar o consentimento a qualquer momento, falando com o hotel pelo WhatsApp acima.</p>
+
+  <h2>Mude sua escolha de cookies</h2>
+  <p><button type="button" id="reabrir">Abrir preferências de cookies</button></p>
+  <p class="muted">Se o botão não abrir nada, é porque o site ainda não usa cookies de terceiros.</p>
+</main>
+<script src="../analytics.js" defer></script>
+<script>
+  document.getElementById('reabrir').addEventListener('click', function(){ if (window.HT) window.HT.reopenConsent(); });
+</script>
+</body>
+</html>

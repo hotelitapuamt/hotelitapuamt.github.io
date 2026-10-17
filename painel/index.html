@@ -87,8 +87,9 @@ a{color:inherit}
   .who{margin:0;border:0;padding:0;display:flex;align-items:center;gap:10px;text-align:right}
   .who .r{display:none}
   .who button{margin:0}
-  .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;flex-direction:row;background:var(--slate);padding:6px 6px calc(6px + env(safe-area-inset-bottom));border-top:1px solid rgba(244,239,229,.14);justify-content:space-around}
-  .nav button{flex-direction:column;gap:3px;padding:7px 4px;font-size:.66rem;min-height:50px;flex:1;text-align:center;justify-content:center}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;flex-direction:row;background:var(--slate);padding:6px 6px calc(6px + env(safe-area-inset-bottom));border-top:1px solid rgba(244,239,229,.14);justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav button{flex-direction:column;gap:3px;padding:7px 4px;font-size:.66rem;min-height:50px;flex:1 0 66px;text-align:center;justify-content:center}
   .main{padding:18px 16px calc(96px + env(safe-area-inset-bottom))}
 }
 
@@ -176,7 +177,7 @@ dialog::backdrop{background:rgba(20,20,22,.55)}
 .form{display:grid;gap:14px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fld label,.fld .lb{display:block;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.fld input,.fld select,.fld textarea{width:100%;background:#fff;border:1px solid rgba(54,55,59,.25);border-radius:3px;padding:10px 12px;min-height:44px}
+.fld input,.mk-row input,.fld select,.fld textarea{width:100%;background:#fff;border:1px solid rgba(54,55,59,.25);border-radius:3px;padding:10px 12px;min-height:44px}
 .fld textarea{min-height:80px;resize:vertical}
 .fld .hint{font-size:.78rem;color:var(--muted);margin-top:4px}
 .checks{display:flex;gap:8px;flex-wrap:wrap}
@@ -214,6 +215,21 @@ details.how ol,details.how ul{margin:10px 0 0 20px;display:grid;gap:6px;font-siz
 .roles{margin:8px 0 0;padding-left:18px;display:grid;gap:6px}
 .ro-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line)}
 .cal-c:disabled{cursor:default}
+
+.bars{display:flex;align-items:flex-end;gap:3px;height:140px;padding:8px 0 0;overflow-x:auto}
+.bars .col{flex:1 0 12px;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;height:100%;min-width:12px}
+.bars .col i{display:block;background:var(--copper);border-radius:2px 2px 0 0;min-height:1px}
+.bars .col u{display:block;background:#3f6b4e;border-radius:2px 2px 0 0;min-height:0;text-decoration:none}
+.bars-l{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:6px}
+.legend{display:flex;gap:14px;font-size:.8rem;color:var(--muted);margin-top:8px}
+.legend b{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+.tbl th{font-weight:500;text-align:left;color:var(--muted);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px 6px 0}
+.tbl td{padding:8px 8px 8px 0;border-top:1px solid var(--line)}.tbl td.n,.tbl th.n{text-align:right}
+.split{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-bottom:22px}
+.mk-row{display:grid;gap:6px}
+.mk-st{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.sec-h{font-family:"Marcellus",serif;font-weight:400;font-size:1.3rem;margin:6px 0 12px}
 </style>
 </head>
 <body>
@@ -405,6 +421,8 @@ const ICONS = {
   reservas:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
   quartos:'<path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 18h18M3 14h18M7 9V6h10v3"/>',
   booking:'<path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-3L4 10M4 14a8 8 0 0 0 14 3l2-3"/>',
+  estatisticas:'<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>',
+  marketing:'<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1ZM17 9a4 4 0 0 1 0 6"/>',
   usuarios:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>'
 };
 function icon(name){
@@ -413,10 +431,10 @@ function icon(name){
   s.setAttribute('stroke-width','1.7'); s.setAttribute('stroke-linecap','round'); s.setAttribute('stroke-linejoin','round');
   s.setAttribute('aria-hidden','true'); s.innerHTML = ICONS[name]; return s;
 }
-const TABS = [['hoje','Hoje'],['calendario','Calendário'],['reservas','Reservas'],['quartos','Quartos'],['booking','Booking'],['usuarios','Usuários']];
+const TABS = [['hoje','Hoje'],['calendario','Calendário'],['reservas','Reservas'],['quartos','Quartos'],['booking','Booking'],['estatisticas','Estatísticas'],['marketing','Marketing'],['usuarios','Usuários']];
 
 function renderShell(){
-  const tabs = TABS.filter(([k]) => k!=='usuarios' || isAdmin());
+  const tabs = TABS.filter(([k]) => (k!=='usuarios' && k!=='marketing' || isAdmin()) && (k!=='estatisticas' || isManager()));
   const nav = h('nav',{class:'nav','aria-label':'Principal'}, tabs.map(([k,l]) =>
     h('button',{type:'button',dataset:undefined,'data-tab':k,onclick:()=>go(k)}, icon(k), h('span',{},l))));
   $('#app').replaceChildren(h('div',{class:'shell'},
@@ -435,7 +453,7 @@ function go(tab){
 }
 function render(){
   const m = $('#main'); if (!m) return;
-  const v = {hoje:viewHoje, calendario:viewCalendario, reservas:viewReservas, quartos:viewQuartos, booking:viewBooking, usuarios:viewUsuarios}[S.tab];
+  const v = {hoje:viewHoje, calendario:viewCalendario, reservas:viewReservas, quartos:viewQuartos, booking:viewBooking, estatisticas:viewEstatisticas, marketing:viewMarketing, usuarios:viewUsuarios}[S.tab];
   m.replaceChildren(); Promise.resolve(v(m)).catch(e => { console.error(e); toast(friendly(e), true); });
 }
 function head(title, sub, actions){
@@ -861,6 +879,113 @@ async function syncNow(roomId, btn){
     const bad = data.filter(x => x.status!=='ok');
     if (bad.length) toast('Quarto '+bad[0].quarto+': '+bad[0].status, true); else toast('Sincronizado com o Booking.com.');
   });
+}
+
+/* =====================  VIEW: ESTATÍSTICAS  ===================== */
+const ACAO_LABEL = {whatsapp_click:'Clique no WhatsApp', room_click:'Interesse em quarto'};
+const DEV_LABEL = {mobile:'Celular',desktop:'Computador',tablet:'Tablet','?':'Outro'};
+function overlapNights(ci, co, d0, d1){ // noites de [ci,co) dentro de [d0,d1)
+  const a = ci > d0 ? ci : d0, b = co < d1 ? co : d1; return a < b ? diffDays(a,b) : 0;
+}
+function hotelStats(dias){
+  const d1 = addDays(today(),1), d0 = addDays(d1,-dias);
+  const rooms = S.rooms.filter(r => r.active).length;
+  const avail = rooms * dias;
+  const direct = S.reservations.filter(r => r.status!=='cancelada');
+  let nDirect = 0, nBooking = 0, receita = 0, reservas = 0; const porOrigem = {};
+  direct.forEach(r => {
+    const n = overlapNights(r.check_in, r.check_out, d0, d1); nDirect += n;
+    if (r.check_in >= d0 && r.check_in < d1){ reservas++; receita += Number(r.total)||0; const o = r.source||'direto'; porOrigem[o] = (porOrigem[o]||0)+1; }
+  });
+  S.blocks.filter(b => b.source==='booking').forEach(b => { nBooking += overlapNights(b.start_date, b.end_date, d0, d1); });
+  const occ = avail ? Math.min(100, Math.round((nDirect+nBooking)/avail*100)) : 0;
+  return {rooms, occ, nDirect, nBooking, receita, reservas, porOrigem};
+}
+async function viewEstatisticas(root){
+  const dias = S.statDias || 30;
+  const per = h('select',{'aria-label':'Período'});
+  [[7,'Últimos 7 dias'],[30,'Últimos 30 dias'],[90,'Últimos 90 dias']].forEach(([v,l]) => per.append(h('option',{value:String(v)},l)));
+  per.value = String(dias);
+  per.addEventListener('change', () => { S.statDias = Number(per.value); render(); });
+  root.append(head('Estatísticas','Visitas do site e resultado do hotel no período.', per));
+  const box = h('div',{}, h('div',{class:'loading'},'Carregando…')); root.append(box);
+  const {data:st,error} = await sb.rpc('stats_resumo',{p_dias:dias}); if (error) throw error;
+  const hs = hotelStats(dias);
+  const pct = (a,b) => b ? (Math.round(a/b*1000)/10).toLocaleString('pt-BR')+'%' : '—';
+  const card = (v,l) => h('div',{class:'card stat'}, h('div',{class:'v'},String(v)), h('div',{class:'l'},l));
+  const out = [];
+  if (!st.visitantes && !st.page_views){
+    out.push(h('div',{class:'alert warn'}, h('b',{},'Ainda sem visitas registradas. '), 'O site começa a contar assim que a versão nova for publicada. Suas visitas não contam se você abrir o site com ?notrack=1 neste aparelho.'));
+  }
+  out.push(h('h2',{class:'sec-h'},'Site'));
+  out.push(h('div',{class:'grid stats'},
+    card(st.visitantes,'Visitantes'), card(st.whatsapp,'Cliques no WhatsApp'),
+    card(pct(st.whatsapp_sessoes, st.visitantes),'Visitantes que chamaram'), card(st.telefone,'Ligações'), card(st.mapa,'Cliques no mapa')));
+  // gráfico por dia
+  const byDay = {}; (st.por_dia||[]).forEach(x => { byDay[x.dia] = x; });
+  const days = []; for (let i=dias-1;i>=0;i--) days.push(addDays(today(),-i));
+  const max = Math.max(1, ...days.map(d => (byDay[d]||{}).visitantes||0));
+  const bars = h('div',{class:'bars',role:'img','aria-label':'Visitantes por dia'}, days.map(d => {
+    const x = byDay[d]||{visitantes:0,whatsapp:0};
+    return h('div',{class:'col',title:fmtD(d)+': '+x.visitantes+' visitantes, '+x.whatsapp+' cliques no WhatsApp'},
+      h('u',{style:'height:'+Math.round((x.whatsapp||0)/max*100)+'%'}), h('i',{style:'height:'+Math.round((x.visitantes||0)/max*100)+'%'}));
+  }));
+  out.push(h('div',{class:'card',style:'margin-bottom:22px'}, h('b',{},'Visitantes por dia'), bars,
+    h('div',{class:'bars-l'}, h('span',{},fmtD(days[0])), h('span',{},fmtD(days[days.length-1]))),
+    h('div',{class:'legend'}, h('span',{}, h('b',{style:'background:var(--copper)'}),'Visitantes'), h('span',{}, h('b',{style:'background:#3f6b4e'}),'Cliques no WhatsApp'))));
+  // tabelas
+  const tbl = (cols, rows, empty) => rows.length ? h('table',{class:'tbl'}, h('thead',{}, h('tr',{}, cols.map((c,i)=>h('th',{class:i?'n':''},c)))),
+      h('tbody',{}, rows.map(r => h('tr',{}, r.map((c,i)=>h('td',{class:i?'n':''},String(c))))))) : h('p',{class:'muted'},empty);
+  out.push(h('div',{class:'split'},
+    h('div',{class:'card'}, h('b',{},'De onde vêm'), tbl(['Origem','Visitantes','WhatsApp'], (st.por_origem||[]).map(o=>[o.origem,o.visitantes,o.whatsapp]), 'Sem dados ainda.')),
+    h('div',{class:'card'}, h('b',{},'O que mais chamam atenção'), tbl(['Ação','Botão / quarto','Vezes'], (st.por_acao||[]).map(a=>[ACAO_LABEL[a.event]||a.event,a.label||'—',a.n]), 'Sem dados ainda.')),
+    h('div',{class:'card'}, h('b',{},'Aparelhos'), tbl(['Aparelho','Visitantes'], (st.por_dispositivo||[]).map(d=>[DEV_LABEL[d.device]||d.device,d.visitantes]), 'Sem dados ainda.'))));
+  // hotel
+  out.push(h('h2',{class:'sec-h'},'Hotel'));
+  out.push(h('div',{class:'grid stats'}, card(hs.occ+'%','Ocupação'), card(hs.reservas,'Reservas diretas'), card(money(hs.receita),'Valor das reservas diretas'),
+    card(hs.nBooking,'Noites vindas do Booking')));
+  out.push(h('p',{class:'muted'},'Ocupação = noites reservadas (diretas + Booking) ÷ noites disponíveis ('+hs.rooms+' quartos ativos × '+dias+' dias). O valor considera só as reservas diretas lançadas aqui, pela data de entrada.'));
+  const ro = Object.entries(hs.porOrigem).map(([k,n]) => [SOURCES[k]||k, n]);
+  out.push(h('div',{class:'card',style:'max-width:420px'}, h('b',{},'Reservas diretas por origem'), tbl(['Origem','Reservas'], ro, 'Nenhuma reserva direta no período.')));
+  box.replaceChildren(...out);
+}
+
+/* =====================  VIEW: MARKETING  ===================== */
+const MK = [
+  {k:'ga4_id', t:'Google Analytics 4 (ID de medição)', ph:'G-XXXXXXXXXX', rx:/^G-[A-Z0-9]{4,14}$/, how:'analytics.google.com → Admin → Fluxos de dados → seu site → “ID da métrica”. Começa com G-.'},
+  {k:'gtm_id', t:'Google Tag Manager (opcional)', ph:'GTM-XXXXXXX', rx:/^GTM-[A-Z0-9]{4,10}$/, how:'tagmanager.google.com → seu contêiner → ID no topo. Se preencher, o site usa só o Tag Manager e ignora o GA4 e o Ads abaixo (configure tudo dentro dele).'},
+  {k:'google_ads_id', t:'Google Ads (ID da conversão)', ph:'AW-123456789', rx:/^AW-\d{6,12}$/, how:'Google Ads → Metas → Conversões → nova conversão “Leads / Contato” → Configuração da tag. Aparece como AW-123456789.'},
+  {k:'google_ads_whatsapp_label', t:'Google Ads (rótulo da conversão do WhatsApp)', ph:'AbC-dEfGhIjKl', rx:/^[\w-]{4,40}$/, how:'Na mesma tela da conversão: em “send_to” vem AW-123456789/AbC-dEfGhIjKl. Cole só a parte depois da barra.'},
+  {k:'meta_pixel_id', t:'Meta Pixel (ID do pixel)', ph:'1234567890123456', rx:/^\d{8,20}$/, how:'business.facebook.com → Gerenciador de Eventos → Fontes de dados → seu pixel → ID (só números). Use um pixel do hotel, não de outro negócio.'}
+];
+async function viewMarketing(root){
+  root.append(head('Marketing','Cole aqui os códigos do Google e da Meta. O site passa a usar na hora, sem precisar publicar de novo.'));
+  const box = h('div',{}, h('div',{class:'loading'},'Carregando…')); root.append(box);
+  const {data,error} = await sb.from('site_settings').select('key,value'); if (error) throw error;
+  const cur = {}; data.forEach(r => cur[r.key] = r.value||'');
+  const inputs = {};
+  const rows = MK.map(m => {
+    const i = h('input',{type:'text',value:cur[m.k]||'',placeholder:m.ph,autocomplete:'off',autocapitalize:'none',spellcheck:'false','aria-label':m.t}); inputs[m.k] = i;
+    const on = !!(cur[m.k]||'').trim();
+    return h('div',{class:'card mk-row'}, h('div',{class:'mk-st'}, h('b',{},m.t), h('span',{class:'chip '+(on?'green':'gray')}, on?'Ativo':'Não configurado')), i,
+      h('details',{class:'how',style:'margin:0;padding:10px 12px'}, h('summary',{},'Onde encontro'), h('p',{class:'muted',style:'margin:8px 0 0'},m.how)));
+  });
+  const err = h('div',{class:'form-err',hidden:true});
+  const save = h('button',{type:'button',class:'btn btn-primary',onclick:e=>run(e.currentTarget, async()=>{
+    err.hidden = true; const rowsOut = [];
+    for (const m of MK){ const v = inputs[m.k].value.trim(); if (v && !m.rx.test(v)){ err.textContent = m.t+': formato inválido. Exemplo: '+m.ph; err.hidden = false; return; } rowsOut.push([m.k,v]); }
+    const res = await Promise.all(rowsOut.map(([k,v]) => sb.from('site_settings').update({value:v}).eq('key',k)));
+    const bad = res.find(r => r.error); if (bad) throw bad.error;
+    toast('Salvo. O site já usa os novos códigos.'); render(); })},'Salvar códigos');
+  const dbg = location.origin + location.pathname.replace(/painel\/?(index\.html)?$/,'');
+  box.replaceChildren(
+    h('div',{class:'grid'}, rows), err, h('div',{style:'margin:14px 0 22px'}, save),
+    h('div',{class:'card'}, h('b',{},'Como conferir que está funcionando'),
+      h('ol',{style:'margin:10px 0 0 20px;display:grid;gap:6px'},
+        h('li',{},'Depois de salvar, abra o site com ',h('b',{},'?ht_debug=1'),' no final do endereço e aceite os cookies. Os eventos aparecem no console do navegador.'),
+        h('li',{},'No Google Analytics, vá em Relatórios → Tempo real e clique em “Reservar pelo WhatsApp”. No Meta, use o Gerenciador de Eventos → Testar eventos.'),
+        h('li',{},'Seus próprios cliques contam como visita. Para não contar neste aparelho, abra uma vez ',h('a',{href:dbg+'?notrack=1',target:'_blank',rel:'noopener'},'este link'),'.')),
+      h('p',{class:'muted',style:'margin:10px 0 0'},'O site já envia: visita, clique no WhatsApp (conversão de contato/lead), ligação, mapa, interesse em cada quarto, rolagem e seções vistas. O Pixel da Meta só carrega depois que o visitante aceita os cookies.')));
 }
 
 /* =====================  VIEW: USUÁRIOS  ===================== */
