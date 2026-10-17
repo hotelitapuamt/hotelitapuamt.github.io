@@ -138,7 +138,7 @@ a{color:inherit}
 
 /* ---------- calendário ---------- */
 .calbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.calbar h2{font-size:1.4rem;min-width:160px;text-transform:capitalize}
+.calbar h2{font-size:1.4rem;min-width:160px}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin:0 0 12px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
 .calwrap{overflow:auto;border:1px solid var(--line);border-radius:4px;background:#fff;max-height:calc(100dvh - 260px);min-height:200px}
@@ -208,6 +208,12 @@ details.how ol,details.how ul{margin:10px 0 0 20px;display:grid;gap:6px;font-siz
 @media (min-width:821px){#toast{bottom:24px}}
 .loading{padding:40px;text-align:center;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.cred{background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 14px;display:grid;gap:8px}
+.cred div{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.cred b{word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace}
+.roles{margin:8px 0 0;padding-left:18px;display:grid;gap:6px}
+.ro-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line)}
+.cal-c:disabled{cursor:default}
 </style>
 </head>
 <body>
@@ -235,12 +241,21 @@ const AMENITIES = ['Ar-condicionado','TV','Frigobar','Banheiro','Wi-Fi','Ventila
 const SOURCES = {direto:'Direto',whatsapp:'WhatsApp',balcao:'Balcão',booking:'Booking.com',outro:'Outro'};
 const STATUS = {confirmada:'Confirmada',hospedado:'Hospedado',concluida:'Concluída',cancelada:'Cancelada'};
 const STATUS_CHIP = {confirmada:'copper',hospedado:'green',concluida:'gray',cancelada:'red'};
-const ROLES = {admin:'Administrador',recepcao:'Recepção',pendente:'Aguardando liberação'};
+const ROLES = {admin:'Administrador',gerente:'Gerente',recepcao:'Recepção',governanca:'Governança',pendente:'Sem acesso'};
+const ROLE_DESC = {
+  admin:'Tudo: quartos, preços, reservas, Booking e usuários.',
+  gerente:'Quartos, preços, reservas, calendário e Booking. Não gerencia usuários.',
+  recepcao:'Reservas, check-in/check-out, bloqueios e calendário. Só consulta os quartos.',
+  governanca:'Somente consulta: vê quem chega e sai e o calendário. Não altera nada.',
+  pendente:'Não entra no painel (conta nova aguardando liberação, ou acesso bloqueado).'};
+const ROLE_ORDER = ['admin','gerente','recepcao','governanca','pendente'];
 
 /* =====================  ESTADO  ===================== */
 const S = {user:null,profile:null,rooms:[],syncs:[],reservations:[],blocks:[],profiles:[],tab:'hoje',month:null,
            resFilter:{q:'',status:'ativas'}};
-const isAdmin = () => S.profile && S.profile.role === 'admin';
+const isAdmin = () => !!S.profile && S.profile.role === 'admin';
+const isManager = () => !!S.profile && ['admin','gerente'].includes(S.profile.role);
+const canWrite = () => !!S.profile && ['admin','gerente','recepcao'].includes(S.profile.role);
 
 /* =====================  UTILIDADES  ===================== */
 const $ = (s, r=document) => r.querySelector(s);
@@ -428,7 +443,7 @@ function head(title, sub, actions){
 }
 function noRooms(){
   return h('div',{class:'empty'}, h('p',{},'Nenhum quarto cadastrado ainda.'),
-    isAdmin() ? h('button',{class:'btn btn-primary',onclick:()=>{go('quartos'); setTimeout(()=>roomForm(null),50);}},'Cadastrar primeiro quarto')
+    isManager() ? h('button',{class:'btn btn-primary',onclick:()=>{go('quartos'); setTimeout(()=>roomForm(null),50);}},'Cadastrar primeiro quarto')
               : h('p',{class:'muted'},'Peça ao administrador para cadastrar os quartos.'));
 }
 
@@ -470,7 +485,7 @@ async function setStatus(r, status, btn){
 function viewHoje(root){
   const t = today(), active = S.rooms.filter(r=>r.active);
   root.append(head('Hoje', new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}),
-    h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{})},'+ Nova reserva')));
+    canWrite() ? h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{})},'+ Nova reserva') : null));
   if (!S.rooms.length){ root.append(noRooms()); return; }
 
   const occupied = active.filter(r => roomBusyOn(r.id,t)).length;
@@ -489,9 +504,9 @@ function viewHoje(root){
     root.append(h('div',{class:'alert warn'}, h('b',{},'Falha na sincronização do Booking ('+roomLabel(roomById(s.room_id))+'): '), s.last_status)));
 
   root.append(section('Chegadas de hoje', arrivals.length), list(arrivals, r =>
-    r.status==='confirmada' ? h('button',{class:'btn btn-primary btn-sm',onclick:e=>setStatus(r,'hospedado',e.currentTarget)},'Check-in feito') : chipFor(r)));
+    r.status==='confirmada' && canWrite() ? h('button',{class:'btn btn-primary btn-sm',onclick:e=>setStatus(r,'hospedado',e.currentTarget)},'Check-in feito') : chipFor(r)));
   root.append(section('Saídas de hoje', departures.length), list(departures, r =>
-    r.status==='hospedado' ? h('button',{class:'btn btn-primary btn-sm',onclick:e=>setStatus(r,'concluida',e.currentTarget)},'Check-out feito') : chipFor(r)));
+    r.status==='hospedado' && canWrite() ? h('button',{class:'btn btn-primary btn-sm',onclick:e=>setStatus(r,'concluida',e.currentTarget)},'Check-out feito') : chipFor(r)));
   root.append(section('Próximos 7 dias', upcoming.length), list(upcoming, r => chipFor(r)));
 }
 const stat = (v,l) => h('div',{class:'card stat'}, h('div',{class:'v'},v), h('div',{class:'l'},l));
@@ -513,7 +528,7 @@ function viewCalendario(root){
   root.append(head('Calendário', 'Toque num dia vazio para reservar ou bloquear; toque numa barra para abrir.'));
   root.append(h('div',{class:'calbar'},
     h('button',{class:'btn btn-ghost btn-sm','aria-label':'Mês anterior',onclick:()=>shift(-1)},'‹'),
-    h('h2',{}, new Date(y,m,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'})),
+    h('h2',{}, (t=>t.charAt(0).toUpperCase()+t.slice(1))(new Date(y,m,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'}))),
     h('button',{class:'btn btn-ghost btn-sm','aria-label':'Próximo mês',onclick:()=>shift(1)},'›'),
     h('button',{class:'btn btn-ghost btn-sm',onclick:()=>{const n=new Date();S.month={y:n.getFullYear(),m:n.getMonth()};render();}},'Hoje')));
   root.append(h('div',{class:'legend'},
@@ -534,7 +549,7 @@ function viewCalendario(root){
     for (let d=1; d<=dim; d++){
       const date = y+'-'+pad(m+1)+'-'+pad(d), wd = parse(date).getDay();
       days.append(h('button',{type:'button',class:'cal-c'+(wd===0||wd===6?' we':'')+(date===t?' today':''),
-        'aria-label':'Quarto '+room.number+', dia '+d, onclick:()=>cellMenu(room,date)}));
+        'aria-label':'Quarto '+room.number+', dia '+d, onclick:canWrite()?()=>cellMenu(room,date):null,disabled:!canWrite()}));
     }
     const seg = (s,e,cls,label,title,onclick,extra) => {
       const cs = s<first ? first : s, ce = e>next ? next : e;
@@ -568,6 +583,8 @@ function blockView(b, room){
       h('p',{}, roomLabel(room)+' · '+fmtDY(b.start_date)+' a '+fmtDY(b.end_date)+' (liberado no dia '+fmtD(b.end_date)+')'),
       b.note ? h('p',{class:'muted'}, b.note) : null,
       h('p',{class:'muted'},'Vem automaticamente do Booking.com e não pode ser editada aqui. Para alterar, use a extranet do Booking.')));
+  } else if (!canWrite()) {
+    openModal('Bloqueio', h('div',{class:'form'}, h('p',{}, roomLabel(room)+' · '+fmtDY(b.start_date)+' a '+fmtDY(b.end_date)), b.note ? h('p',{class:'muted'}, b.note) : null));
   } else blockForm(b);
 }
 function blockForm(b, defaults){
@@ -607,7 +624,17 @@ function confirmDelete(btn, fn){
 }
 
 /* =====================  RESERVAS (formulário)  ===================== */
+function reservationInfo(r){
+  const rm = roomById(r.room_id);
+  const row = (k,v) => h('div',{class:'ro-row'}, h('span',{class:'muted'},k), h('b',{},v||'—'));
+  openModal('Reserva de '+r.guest_name, h('div',{class:'form'},
+    row('Quarto', rm?roomLabel(rm):''), row('Telefone', r.guest_phone), row('Pessoas', r.guest_count?String(r.guest_count):''),
+    row('Entrada', fmtDY(r.check_in)), row('Saída', fmtDY(r.check_out)), row('Situação', STATUS[r.status]),
+    row('Origem', r.source), r.notes ? row('Observações', r.notes) : null,
+    h('p',{class:'muted'},'Seu acesso é somente consulta. Peça à recepção ou à gerência para alterar.')));
+}
 function reservationForm(r, defaults){
+  if (!canWrite()){ if (r) reservationInfo(r); return; }
   const d = r || defaults || {};
   const act = S.rooms.filter(x => x.active || x.id===d.room_id);
   if (!act.length){ toast('Cadastre um quarto antes de criar reservas.', true); return; }
@@ -637,7 +664,7 @@ function reservationForm(r, defaults){
   recalc();
 
   const wa = r && r.guest_phone ? h('a',{class:'btn btn-ghost',href:'https://wa.me/'+(digits(r.guest_phone).length<=11?'55':'')+digits(r.guest_phone),target:'_blank',rel:'noopener'},'WhatsApp') : null;
-  const del = r && isAdmin() ? h('button',{type:'button',class:'btn btn-danger',onclick:ev=>confirmDelete(ev.currentTarget,async()=>{
+  const del = r && isManager() ? h('button',{type:'button',class:'btn btn-danger',onclick:ev=>confirmDelete(ev.currentTarget,async()=>{
       const {error}=await sb.from('reservations').delete().eq('id',r.id); if(error) throw error; closeModal(); toast('Reserva excluída.'); await reload(); })},'Remover') : null;
   f.append(fld('Quarto',room), fld('Nome do hóspede',name),
     h('div',{class:'row2'}, fld('Telefone / WhatsApp',phone), fld('Pessoas',count)),
@@ -670,7 +697,7 @@ function reservationForm(r, defaults){
 /* =====================  VIEW: RESERVAS  ===================== */
 function viewReservas(root){
   root.append(head('Reservas','Reservas diretas (WhatsApp, balcão). As do Booking.com aparecem no calendário.',
-    h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{})},'+ Nova reserva')));
+    canWrite() ? h('button',{class:'btn btn-primary',onclick:()=>reservationForm(null,{})},'+ Nova reserva') : null));
   const q = h('input',{type:'search',placeholder:'Buscar por nome ou telefone',value:S.resFilter.q,'aria-label':'Buscar'});
   const st = h('select',{'aria-label':'Situação'});
   [['ativas','Ativas (confirmadas e hospedados)'],['futuras','Próximas chegadas'],['todas','Todas'],['concluida','Concluídas'],['cancelada','Canceladas']]
@@ -706,10 +733,10 @@ function resRow(r){
 /* =====================  VIEW: QUARTOS  ===================== */
 function viewQuartos(root){
   root.append(head('Quartos','Cadastro dos quartos do hotel. Os marcados como “Mostrar no site” aparecem com preço atualizado no site.',
-    isAdmin() ? h('button',{class:'btn btn-primary',onclick:()=>roomForm(null)},'+ Novo quarto') : null));
+    isManager() ? h('button',{class:'btn btn-primary',onclick:()=>roomForm(null)},'+ Novo quarto') : null));
   if (!S.rooms.length){ root.append(noRooms()); return; }
   root.append(h('div',{class:'grid rooms'}, S.rooms.map(r =>
-    h('button',{type:'button',class:'room card click',style:'padding:0',onclick:()=>isAdmin()?roomForm(r):roomInfo(r)},
+    h('button',{type:'button',class:'room card click',style:'padding:0',onclick:()=>isManager()?roomForm(r):roomInfo(r)},
       h('div',{class:'ph',style:r.photo_url?'background-image:url("'+r.photo_url.replace(/"/g,'%22')+'")':''}, r.photo_url?'':'Sem foto'),
       h('div',{class:'bd'},
         h('h3',{},'Quarto '+r.number+(r.name?' · '+r.name:'')),
@@ -793,7 +820,7 @@ function roomForm(r){
 /* =====================  VIEW: BOOKING  ===================== */
 function viewBooking(root){
   root.append(head('Booking.com','Traz as reservas feitas no Booking.com para o calendário e bloqueia os quartos automaticamente.',
-    h('button',{class:'btn btn-primary',onclick:async e=>syncNow(null,e.currentTarget)},'Sincronizar todos agora')));
+    isManager() ? h('button',{class:'btn btn-primary',onclick:async e=>syncNow(null,e.currentTarget)},'Sincronizar todos agora') : null));
   root.append(h('details',{class:'how'}, h('summary',{},'Como conectar'),
     h('ol',{},
       h('li',{},'Na extranet do Booking.com, procure a opção de sincronizar calendários (“Calendar sync”) e copie o link de exportação (iCal) do quarto ou tipo de quarto.'),
@@ -809,7 +836,7 @@ function viewBooking(root){
 }
 function syncCard(room){
   const s = S.syncs.find(x => x.room_id===room.id) || {};
-  const url = h('input',{type:'url',placeholder:'https://ical.booking.com/v1/export?t=…',value:s.ical_url||'',disabled:!isAdmin(),autocomplete:'off',autocapitalize:'none',spellcheck:'false','aria-label':'Link iCal do quarto '+room.number});
+  const url = h('input',{type:'url',placeholder:'https://ical.booking.com/v1/export?t=…',value:s.ical_url||'',disabled:!isManager(),autocomplete:'off',autocapitalize:'none',spellcheck:'false','aria-label':'Link iCal do quarto '+room.number});
   const ok = s.last_status==='ok';
   const status = h('div',{class:'muted'+(s.ical_url?(ok?' status-ok':' status-err'):'')},
     !s.ical_url ? 'Sem link configurado.' :
@@ -823,7 +850,7 @@ function syncCard(room){
   const now = h('button',{class:'btn btn-primary',disabled:!s.ical_url,onclick:e=>syncNow(room.id,e.currentTarget)},'Sincronizar agora');
   return h('div',{class:'card sync-card'},
     h('div',{style:'display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap'}, h('b',{},'Quarto '+room.number+(room.name?' · '+room.name:'')), h('span',{class:'chip gray'},TYPES[room.type]||room.type)),
-    h('div',{class:'line'}, url, isAdmin()?save:null, now), status);
+    h('div',{class:'line'}, url, isManager()?save:null, isManager()?now:null), status);
 }
 async function syncNow(roomId, btn){
   await run(btn, async () => {
@@ -837,22 +864,98 @@ async function syncNow(roomId, btn){
 }
 
 /* =====================  VIEW: USUÁRIOS  ===================== */
+const SENHA_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+function gerarSenha(n=10){
+  const a = new Uint32Array(n); crypto.getRandomValues(a);
+  return Array.from(a, x => SENHA_CHARS[x % SENHA_CHARS.length]).join('');
+}
+async function copiar(txt, msg){
+  try { await navigator.clipboard.writeText(txt); toast(msg||'Copiado.'); }
+  catch(e){ toast('Não consegui copiar. Selecione o texto e copie manualmente.', true); }
+}
+function roleOptions(withPending){ return ROLE_ORDER.filter(r => withPending || r!=='pendente').map(r => [r, ROLES[r]]); }
+
+function senhaField(){
+  const pw = h('input',{type:'text',name:'senha',required:true,minlength:'8',autocomplete:'off',autocapitalize:'none',spellcheck:'false',value:gerarSenha()});
+  const again = h('button',{type:'button',class:'btn btn-ghost btn-sm',onclick:()=>{ pw.value = gerarSenha(); }},'Gerar outra');
+  return {pw, node: fld('Senha (mínimo 8 caracteres)', h('div',{style:'display:flex;gap:8px'}, pw, again), 'Sugerimos uma senha forte. Anote ou copie antes de salvar. A pessoa poderá usar esta senha para entrar.')};
+}
+function credenciais(titulo, email, senha, papel){
+  const txt = 'Painel do Hotel Itapuã\nEndereço: '+location.origin+location.pathname+'\nE-mail: '+email+'\nSenha: '+senha;
+  openModal(titulo, h('div',{class:'form'},
+    h('p',{}, 'Passe estes dados para a pessoa. Por segurança, esta senha não aparece de novo.'),
+    h('div',{class:'cred'}, h('div',{}, h('span',{class:'muted'},'E-mail'), h('b',{},email)), h('div',{}, h('span',{class:'muted'},'Senha'), h('b',{},senha)),
+      papel ? h('div',{}, h('span',{class:'muted'},'Acesso'), h('b',{},ROLES[papel])) : null),
+    h('div',{class:'dlg-f'}, h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},
+      h('button',{type:'button',class:'btn btn-primary',onclick:()=>copiar(txt,'Dados copiados.')},'Copiar tudo'),
+      h('a',{class:'btn btn-ghost',href:'https://wa.me/?text='+encodeURIComponent(txt),target:'_blank',rel:'noopener'},'Enviar por WhatsApp')),
+      h('div',{class:'r'}, h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Fechar')))));
+}
+function userForm(){
+  const err = h('div',{class:'form-err',hidden:true});
+  const f = h('form',{class:'form'});
+  const name = h('input',{type:'text',name:'name',maxlength:'80',required:true,autocomplete:'off',placeholder:'Ex.: Maria da Recepção'});
+  const email = h('input',{type:'email',name:'email',required:true,inputmode:'email',autocomplete:'off',autocapitalize:'none',autocorrect:'off',placeholder:'maria@exemplo.com'});
+  const role = sel('role', roleOptions(false), 'recepcao');
+  const hint = h('div',{class:'hint'}, ROLE_DESC[role.value]);
+  role.addEventListener('change', () => { hint.textContent = ROLE_DESC[role.value]; });
+  const {pw, node:pwNode} = senhaField();
+  f.append(fld('Nome',name), fld('E-mail (será o login)',email), fld('Nível de acesso',role,null), hint, pwNode, err,
+    h('div',{class:'dlg-f'}, h('div',{}), h('div',{class:'r'},
+      h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Cancelar'),
+      h('button',{type:'submit',class:'btn btn-primary'},'Criar usuário'))));
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault(); err.hidden = true;
+    const btn = f.querySelector('[type=submit]');
+    await run(btn, async () => {
+      const {error} = await sb.rpc('admin_criar_usuario',{p_email:email.value.trim(),p_senha:pw.value,p_nome:name.value.trim(),p_papel:role.value});
+      if (error){ err.textContent = friendly(error); err.hidden = false; return; }
+      const em = email.value.trim().toLowerCase(), sn = pw.value, pa = role.value;
+      toast('Usuário criado.'); credenciais('Usuário criado', em, sn, pa); S.tab==='usuarios' && render();
+    });
+  });
+  openModal('Novo usuário', f);
+}
+function passwordForm(p){
+  const err = h('div',{class:'form-err',hidden:true});
+  const f = h('form',{class:'form'});
+  const {pw, node:pwNode} = senhaField();
+  f.append(h('p',{},'Nova senha para ', h('b',{},p.name||p.email), '.'), pwNode, err,
+    h('div',{class:'dlg-f'}, h('div',{}), h('div',{class:'r'},
+      h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Cancelar'),
+      h('button',{type:'submit',class:'btn btn-primary'},'Salvar nova senha'))));
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault(); err.hidden = true;
+    await run(f.querySelector('[type=submit]'), async () => {
+      const {error} = await sb.rpc('admin_redefinir_senha',{p_user:p.user_id,p_senha:pw.value});
+      if (error){ err.textContent = friendly(error); err.hidden = false; return; }
+      credenciais('Senha alterada', p.email, pw.value, null);
+    });
+  });
+  openModal('Redefinir senha', f);
+}
 async function viewUsuarios(root){
-  root.append(head('Usuários','Quem pode entrar no painel e o que pode fazer.'));
-  root.append(h('details',{class:'how',open:true}, h('summary',{},'Como adicionar alguém da equipe'),
-    h('ol',{},
-      h('li',{},'No Supabase (Authentication → Users), clique em Add user → Create new user, informe e-mail e senha e marque Auto Confirm User.'),
-      h('li',{},'Volte aqui: a pessoa aparece abaixo como “Aguardando liberação”. Escolha Recepção (reservas e calendário) ou Administrador (também quartos, preços e usuários).'))));
+  root.append(head('Usuários','Quem pode entrar no painel e o que cada pessoa pode fazer.',
+    h('button',{class:'btn btn-primary',onclick:userForm},'+ Novo usuário')));
+  root.append(h('details',{class:'how'}, h('summary',{},'O que cada nível de acesso pode fazer'),
+    h('ul',{class:'roles'}, ROLE_ORDER.map(r => h('li',{}, h('b',{},ROLES[r]+': '), ROLE_DESC[r])))));
   const box = h('div',{class:'list'}, h('div',{class:'loading'},'Carregando…')); root.append(box);
   const {data,error} = await sb.from('profiles').select('*').order('created_at'); if (error) throw error;
   S.profiles = data;
   box.replaceChildren(...data.map(p => {
     const me = p.user_id===S.user.id;
-    const s = sel('role',Object.entries(ROLES),p.role); s.disabled = me; s.style.cssText='min-height:42px;border:1px solid var(--line);border-radius:3px;padding:6px 10px;background:#fff';
+    const s = sel('role',roleOptions(true),p.role); s.disabled = me; s.setAttribute('aria-label','Nível de acesso de '+(p.name||p.email));
+    s.style.cssText='min-height:42px;border:1px solid var(--line);border-radius:3px;padding:6px 10px;background:#fff';
     s.addEventListener('change', () => run(s, async()=>{
-      const {error} = await sb.from('profiles').update({role:s.value}).eq('user_id',p.user_id); if (error) throw error; toast('Permissão atualizada.'); }));
+      const {error} = await sb.from('profiles').update({role:s.value}).eq('user_id',p.user_id); if (error) throw error;
+      p.role = s.value; toast('Nível de acesso atualizado.'); }));
+    const actions = me ? null : h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},
+      h('button',{type:'button',class:'btn btn-ghost btn-sm',onclick:()=>passwordForm(p)},'Nova senha'),
+      h('button',{type:'button',class:'btn btn-danger btn-sm',onclick:e=>confirmDelete(e.currentTarget,async()=>{
+        const {error} = await sb.rpc('admin_remover_usuario',{p_user:p.user_id}); if (error) throw error;
+        toast('Usuário removido.'); render(); })},'Remover'));
     return h('div',{class:'item'}, h('div',{class:'main-t'}, h('b',{},p.name||p.email), me?' (você)':'', h('div',{class:'muted'},p.email)),
-      p.role==='pendente'?h('span',{class:'chip copper'},'Novo'):null, s);
+      p.role==='pendente'?h('span',{class:'chip copper'},'Sem acesso'):null, s, actions);
   }));
 }
 
