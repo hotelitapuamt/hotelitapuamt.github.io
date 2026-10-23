@@ -372,21 +372,21 @@
   }
 </style>
 <style id="rgrid-css">
-  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:clamp(16px,2.4vw,26px);margin-top:clamp(28px,5vw,48px)}
-  .rcard{display:flex;flex-direction:column;background:rgba(244,239,229,.03);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-  .rcard .ph{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:clamp(18px,2.4vw,28px);margin-top:clamp(28px,5vw,48px)}
+  .rcard{display:flex;flex-direction:column;background:#fbf9f4;border:1px solid var(--line-d);border-radius:18px;overflow:hidden;box-shadow:0 20px 40px -32px rgba(38,39,42,.5)}
+  .rcard .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--ivory-2)}
   .rcard .ph img{width:100%;height:100%;object-fit:cover;display:block}
-  .rcard .ph .tag{position:absolute;top:12px;left:12px;background:rgba(27,28,31,.72);color:var(--ivory);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 11px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .rcard .body{display:flex;flex-direction:column;flex:1;padding:22px 22px 24px}
-  .rcard h3{font-family:var(--serif);font-size:1.7rem;color:var(--ivory);margin:0}
-  .rcard .fits{color:var(--mut-l);font-size:.92rem;margin:4px 0 0}
-  .rcard .price{margin:16px 0 0;display:flex;align-items:baseline;gap:7px}
-  .rcard .price .v{font-family:var(--serif);font-size:2rem;color:var(--copper-hi);font-variant-numeric:tabular-nums}
-  .rcard .price .u{color:var(--mut-l);font-size:.82rem}
-  .rcard ul{list-style:none;margin:16px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px}
-  .rcard ul li{font-size:.74rem;letter-spacing:.03em;color:var(--mut-l);background:rgba(244,239,229,.06);padding:5px 10px;border-radius:999px}
-  .rcard .res{margin-top:auto;padding-top:20px}
-  .rcard .res a{display:block;text-align:center}
+  .rcard .ph .tag{position:absolute;top:14px;left:14px;padding:7px 13px;border-radius:999px;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ivory);background:rgba(27,28,31,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(244,239,229,.18)}
+  .rcard .body{display:flex;flex-direction:column;flex:1;padding:24px 24px 26px}
+  .rcard h3{font-family:var(--serif);font-size:1.9rem;line-height:1;letter-spacing:-.02em;color:var(--ink);margin:0}
+  .rcard .fits{color:var(--mut);font-size:.95rem;margin:6px 0 0}
+  .rcard .price{margin:18px 0 0;display:flex;align-items:baseline;gap:8px}
+  .rcard .price .v{font-family:var(--serif);font-size:2.3rem;line-height:1;color:var(--copper-deep);font-variant-numeric:tabular-nums}
+  .rcard .price .u{color:var(--mut);font-size:.9rem}
+  .rcard ul{list-style:none;margin:18px 0 0;padding:18px 0 0;border-top:1px solid var(--line-d);display:flex;flex-wrap:wrap;gap:8px}
+  .rcard ul li{font-size:.8rem;color:#47433c;background:var(--ivory-2);padding:7px 13px;border-radius:999px}
+  .rcard .res{margin-top:auto;padding-top:22px}
+  .rcard .res a{display:block;width:100%;text-align:center}
 </style>
 </head>
 <body>
