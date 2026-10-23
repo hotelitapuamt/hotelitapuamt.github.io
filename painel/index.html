@@ -277,7 +277,7 @@ const ROLE_DESC = {
 const ROLE_ORDER = ['admin','gerente','recepcao','governanca','pendente'];
 
 /* =====================  ESTADO  ===================== */
-const S = {user:null,profile:null,rooms:[],syncs:[],reservations:[],blocks:[],profiles:[],tab:'hoje',month:null,
+const S = {user:null,profile:null,rooms:[],syncs:[],reservations:[],blocks:[],profiles:[],tab:'site',month:null,
            resFilter:{q:'',status:'ativas'}};
 const isAdmin = () => !!S.profile && S.profile.role === 'admin';
 const isManager = () => !!S.profile && ['admin','gerente'].includes(S.profile.role);
@@ -442,7 +442,7 @@ function icon(name){
   s.setAttribute('stroke-width','1.7'); s.setAttribute('stroke-linecap','round'); s.setAttribute('stroke-linejoin','round');
   s.setAttribute('aria-hidden','true'); s.innerHTML = ICONS[name]; return s;
 }
-const TABS = [['hoje','Hoje'],['calendario','Calendário'],['reservas','Reservas'],['quartos','Quartos'],['site','Site'],['booking','Booking'],['estatisticas','Estatísticas'],['marketing','Marketing'],['usuarios','Usuários']];
+const TABS = [['site','Quartos'],['usuarios','Usuários']];
 
 function renderShell(){
   const tabs = TABS.filter(([k]) => (k!=='usuarios' && k!=='marketing' || isAdmin()) && (k!=='estatisticas' || isManager()) && (k!=='site' || isManager()));
@@ -868,7 +868,7 @@ async function uploadImage(file){
 function dropImage(url){
   if (url && url.includes('/quartos/')) sb.storage.from('quartos').remove([decodeURIComponent(url.split('/quartos/').pop())]);
 }
-const SITE_MAX_ROOMS = 4;
+const SITE_MAX_ROOMS = 12;
 async function viewSite(root){
   root.append(head('Site do hotel','O que você mudar aqui aparece no site em poucos segundos: preços, fotos e detalhes dos quartos.',
     h('a',{class:'btn btn-ghost',href:'../',target:'_blank',rel:'noopener'},'Abrir o site')));
