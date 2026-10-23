@@ -371,6 +371,23 @@
     .btn-copper.pulse::after{display:none}
   }
 </style>
+<style id="rgrid-css">
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:clamp(16px,2.4vw,26px);margin-top:clamp(28px,5vw,48px)}
+  .rcard{display:flex;flex-direction:column;background:rgba(244,239,229,.03);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .rcard .ph{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .rcard .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .rcard .ph .tag{position:absolute;top:12px;left:12px;background:rgba(27,28,31,.72);color:var(--ivory);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 11px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .rcard .body{display:flex;flex-direction:column;flex:1;padding:22px 22px 24px}
+  .rcard h3{font-family:var(--serif);font-size:1.7rem;color:var(--ivory);margin:0}
+  .rcard .fits{color:var(--mut-l);font-size:.92rem;margin:4px 0 0}
+  .rcard .price{margin:16px 0 0;display:flex;align-items:baseline;gap:7px}
+  .rcard .price .v{font-family:var(--serif);font-size:2rem;color:var(--copper-hi);font-variant-numeric:tabular-nums}
+  .rcard .price .u{color:var(--mut-l);font-size:.82rem}
+  .rcard ul{list-style:none;margin:16px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px}
+  .rcard ul li{font-size:.74rem;letter-spacing:.03em;color:var(--mut-l);background:rgba(244,239,229,.06);padding:5px 10px;border-radius:999px}
+  .rcard .res{margin-top:auto;padding-top:20px}
+  .rcard .res a{display:block;text-align:center}
+</style>
 </head>
 <body>
 <a class="skip" href="#conteudo">Ir para o conteúdo</a>
@@ -454,45 +471,12 @@
   <div class="wrap">
     <div class="head rv">
       <h2>Escolha o quarto certo para a sua estadia</h2>
-      <p>Três opções para quem viaja sozinho, em dupla ou em grupo. Todas com ar-condicionado, TV, frigobar e banheiro.</p>
+      <p>Nossos quartos para quem viaja sozinho, em dupla ou em grupo. Todos com ar-condicionado, TV, frigobar e banheiro.</p>
     </div>
-    <div class="tabs rv" role="tablist" aria-label="Tipo de quarto" id="tabs">
-      <span class="thumb" id="thumb" aria-hidden="true"></span>
-      <button type="button" role="tab" id="tab0" aria-controls="p0" aria-selected="true" data-room="0">Casal<small>R$160</small></button>
-      <button type="button" role="tab" id="tab1" aria-controls="p1" aria-selected="false" tabindex="-1" data-room="1">Duplo<small>R$190</small></button>
-      <button type="button" role="tab" id="tab2" aria-controls="p2" aria-selected="false" tabindex="-1" data-room="2">Triplo<small>R$230</small></button>
-    </div>
-    <div class="stage" id="stage">
-      <article class="room on" id="p0" role="tabpanel" aria-labelledby="tab0">
-        <div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-couple.jpg" width="1200" height="1600" alt="Quarto casal com cama de casal e janela" loading="lazy"></div>
-        <div class="body">
-          <h3>Casal</h3>
-          <p class="fits">Cama de casal &middot; ideal para o casal</p>
-          <div class="price"><span class="v">R$160</span><span class="u">por diária</span></div>
-          <ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul>
-          <div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20o%20quarto%20Casal%20(R%24160)%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Casal</a></div>
-        </div>
-      </article>
-      <article class="room" id="p1" role="tabpanel" aria-labelledby="tab1">
-        <div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-floral-wide.jpg" width="1600" height="1200" alt="Quarto duplo com cama de casal e cama de solteiro" loading="lazy"></div>
-        <div class="body">
-          <h3>Duplo</h3>
-          <p class="fits">Cama de casal + solteiro &middot; mais espaço</p>
-          <div class="price"><span class="v">R$190</span><span class="u">por diária</span></div>
-          <ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul>
-          <div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20o%20quarto%20Duplo%20(R%24190)%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Duplo</a></div>
-        </div>
-      </article>
-      <article class="room" id="p2" role="tabpanel" aria-labelledby="tab2">
-        <div class="ph"><span class="tag">Para 3 pessoas</span><img src="img/room-blue-twin.jpg" width="1600" height="1200" alt="Quarto triplo com cama de casal e cama de solteiro" loading="lazy"></div>
-        <div class="body">
-          <h3>Triplo</h3>
-          <p class="fits">Cama de casal + solteiro &middot; acomoda 3</p>
-          <div class="price"><span class="v">R$230</span><span class="u">por diária</span></div>
-          <ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul>
-          <div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20o%20quarto%20Triplo%20(R%24230)%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Triplo</a></div>
-        </div>
-      </article>
+    <div class="rgrid" id="roomGrid">
+      <article class="rcard"><div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-couple.jpg" alt="Quarto casal" loading="lazy"></div><div class="body"><h3>Casal</h3><p class="fits">Cama de casal &middot; ideal para o casal</p><div class="price"><span class="v">R$160</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Casal%20%28R%24160%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Casal</a></div></div></article>
+      <article class="rcard"><div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-floral-wide.jpg" alt="Quarto duplo" loading="lazy"></div><div class="body"><h3>Duplo</h3><p class="fits">Cama de casal + solteiro &middot; mais espaço</p><div class="price"><span class="v">R$190</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Duplo%20%28R%24190%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Duplo</a></div></div></article>
+      <article class="rcard"><div class="ph"><span class="tag">Para 3 pessoas</span><img src="img/room-blue-twin.jpg" alt="Quarto triplo" loading="lazy"></div><div class="body"><h3>Triplo</h3><p class="fits">Cama de casal + solteiro &middot; acomoda 3</p><div class="price"><span class="v">R$230</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Triplo%20%28R%24230%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Triplo</a></div></div></article>
     </div>
   </div>
 </section>
@@ -720,51 +704,7 @@
     return{to:function(n){t=n;if(reduce){x=n;v=0;on(x);return}if(!run){run=true;last=performance.now();requestAnimationFrame(step)}},set:function(n){x=t=n;v=0;on(x)}};
   }
 
-  /* seletor de quartos */
-  (function(){
-    var tabs=[0,1,2].map(function(i){return $('tab'+i)}),panels=[0,1,2].map(function(i){return $('p'+i)});
-    var thumb=$('thumb'),box=$('tabs'),stage=$('stage');if(!thumb||!stage)return;
-    var cur=0,w=0,prices=[160,190,230];
-    function count(el,from,to){
-      if(reduce){el.textContent='R$'+to;return}
-      var t0=performance.now(),D=650;
-      (function f(ts){var t=Math.min((ts-t0)/D,1),e=t>=1?1:1-Math.pow(2,-10*t);el.textContent='R$'+Math.round(from+(to-from)*e);if(t<1)requestAnimationFrame(f)})(t0);
-    }
-    var sp=Spring(.42,.82,function(x){thumb.style.transform='translate3d('+x+'px,0,0)'});
-    function measure(){w=(box.clientWidth-10)/3;return w}
-    function select(i,focus){
-      i=(i+3)%3;if(i===cur&&panels[i].classList.contains('on'))return;var prev=cur;cur=i;
-      if(!reduce&&panels[i].animate){
-        panels[i].querySelector('.ph img').animate([{clipPath:'inset(0 100% 0 0)',transform:'scale(1.14)'},{clipPath:'inset(0 0 0 0)',transform:'scale(1)'}],{duration:850,easing:'cubic-bezier(.23,1,.32,1)'});
-        count(panels[i].querySelector('.price .v'),prices[prev],prices[i]);
-      }
-      tabs.forEach(function(b,j){var on=j===i;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1});
-      panels.forEach(function(p,j){var on=j===i;p.classList.toggle('on',on);p.inert=!on;p.setAttribute('aria-hidden',!on)});
-      measure();sp.to(i*w);if(focus)tabs[i].focus();
-    }
-    panels.forEach(function(p,j){if(j){p.inert=true;p.setAttribute('aria-hidden','true')}});
-    measure();sp.set(0);
-    addEventListener('resize',function(){measure();sp.set(cur*w)});
-    tabs.forEach(function(b,i){
-      b.addEventListener('click',function(){select(i)});
-      b.addEventListener('keydown',function(e){
-        if(e.key==='ArrowRight')select(i+1,true),e.preventDefault();
-        else if(e.key==='ArrowLeft')select(i-1,true),e.preventDefault();
-      });
-    });
-    [].forEach.call(document.querySelectorAll('.rate-strip [data-room]'),function(a){
-      a.addEventListener('click',function(){select(+a.getAttribute('data-room'))});
-    });
-    /* deslizar para trocar (projeção de momento, como o scroll do iOS) */
-    var s=null;
-    stage.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse')return;s={x:e.clientX,y:e.clientY,t:performance.now()}});
-    stage.addEventListener('pointerup',function(e){
-      if(!s)return;var dx=e.clientX-s.x,dy=e.clientY-s.y,dt=Math.max(performance.now()-s.t,16);s=null;
-      var v=dx/dt*1000,proj=dx+(v/1000)*.998/(1-.998)*.35;
-      if(Math.abs(dx)>24&&Math.abs(dx)>Math.abs(dy)*1.4&&Math.abs(proj)>70)select(cur+(proj<0?1:-1));
-    });
-    stage.addEventListener('pointercancel',function(){s=null});
-  })();
+  /* seletor de quartos: removido — quartos vêm do painel (grade dinâmica) */
 
   /* galeria: arrastar com momento, setas, progresso e ampliação */
   (function(){
@@ -818,5 +758,33 @@
 })();
 </script>
 <script src="analytics.js" defer></script>
+<script>
+(function(){
+  var U="https://hayslcuhsqnlatcpllqk.supabase.co",K="sb_publishable_YmQUUMpw2e7jY-XVtGWSUg_0Yx6N0Ox",WA="556574000781";
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function money(p){if(p==null||p==="")return"";var n=Number(p);return isNaN(n)?esc(p):"R$"+(Number.isInteger(n)?n:n.toFixed(2).replace(".",","));}
+  function wa(name,price){var m="Olá! Gostaria de reservar o quarto "+name+(price!=null&&price!==""?" ("+money(price)+")":"")+" no Hotel Itapuã.";return "https://wa.me/"+WA+"?text="+encodeURIComponent(m);}
+  function card(r){
+    var ams=(Array.isArray(r.amenities)?r.amenities:[]).map(function(a){return "<li>"+esc(a)+"</li>";}).join("");
+    var tag=r.tag?'<span class="tag">'+esc(r.tag)+"</span>":"";
+    var fits=r.fits?'<p class="fits">'+esc(r.fits)+"</p>":"";
+    return '<article class="rcard"><div class="ph">'+tag+'<img src="'+esc(r.photo_url)+'" alt="'+esc(r.photo_alt||r.name)+'" loading="lazy"></div>'
+      +'<div class="body"><h3>'+esc(r.name)+"</h3>"+fits
+      +'<div class="price"><span class="v">'+money(r.price)+'</span><span class="u">por diária</span></div>'
+      +"<ul>"+ams+"</ul>"
+      +'<div class="res"><a class="btn btn-dark" href="'+wa(r.name,r.price)+'" target="_blank" rel="noopener">Reservar '+esc(r.name)+"</a></div></div></article>";
+  }
+  fetch(U+"/rest/v1/site_rooms?select=name,tag,fits,price,amenities,photo_url,photo_alt,position&visible=eq.true&order=position",{headers:{apikey:K}})
+    .then(function(r){return r.ok?r.json():[];})
+    .then(function(rooms){
+      if(!rooms||!rooms.length)return;
+      var g=document.getElementById("roomGrid"); if(g)g.innerHTML=rooms.map(card).join("");
+      var strip=document.querySelector(".rate-strip .wrap");
+      if(strip)strip.innerHTML=rooms.slice(0,3).map(function(r){return '<a href="#quartos"><span class="t">'+esc(r.name)+'</span><span class="p"><b>'+money(r.price)+"</b><span>/ diária</span></span></a>";}).join("");
+      var fr=document.querySelector(".foot-rates");
+      if(fr)fr.innerHTML=rooms.map(function(r){return '<div><div class="t">'+esc(r.name)+'</div><div class="v">'+money(r.price)+"</div></div>";}).join("");
+    }).catch(function(){});
+})();
+</script>
 </body>
 </html>
