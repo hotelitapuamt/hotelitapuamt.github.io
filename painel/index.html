@@ -901,6 +901,7 @@ async function viewSite(root){
           h('div',{class:'muted'}, r.fits||'—'),
           h('div',{class:'pr'}, money(r.price), h('small',{},' / diária')),
           h('div',{class:'chips'}, h('span',{class:'chip '+(r.visible?'green':'gray')}, r.visible?'Aparece no site':'Oculto'),
+            r.featured?h('span',{class:'chip'},'★ No topo'):null,
             ...(r.amenities||[]).slice(0,3).map(x=>h('span',{class:'chip'},x))))),
       mv('site_rooms',rooms,i))))
     : h('div',{class:'card'},'Nenhum quarto cadastrado para o site.');
@@ -948,6 +949,7 @@ function siteRoomForm(r, rooms){
   const other = h('input',{name:'other',maxlength:'80',placeholder:'Outras comodidades, separadas por vírgula'});
   const alt = h('input',{name:'alt',maxlength:'140',value:d.photo_alt||'',placeholder:'Descreva a foto (ajuda quem usa leitor de tela e o Google)'});
   const visible = h('input',{type:'checkbox',checked:d.visible!==false});
+  const featured = h('input',{type:'checkbox',checked:d.featured===true});
   const file = h('input',{type:'file',accept:'image/jpeg,image/png,image/webp'});
   const prev = h('div',{class:'photo-prev',style:d.photo_url?'background-image:url("'+imgSrc(d.photo_url)+'")':''}, d.photo_url?'':'Sem foto');
   file.addEventListener('change', () => { const x = file.files[0]; if (x){ prev.style.backgroundImage='url("'+URL.createObjectURL(x)+'")'; prev.textContent=''; } });
@@ -960,7 +962,9 @@ function siteRoomForm(r, rooms){
     h('div',{class:'fld'}, h('div',{class:'lb'},'Comodidades'), am, other),
     h('div',{class:'fld'}, h('div',{class:'lb'},'Foto do quarto'), prev, file, h('div',{class:'hint'},'JPG, PNG ou WebP. A foto é reduzida automaticamente.')),
     fld('Descrição da foto',alt),
-    h('div',{class:'switches'}, h('label',{},visible,'Mostrar este quarto no site')),
+    h('div',{class:'switches'},
+      h('label',{},visible,'Mostrar este quarto no site'),
+      h('label',{},featured,'Destacar na faixa de preços do topo (até 3)')),
     err,
     h('div',{class:'dlg-f'}, del, h('div',{class:'r'}, h('button',{type:'button',class:'btn btn-ghost',onclick:closeModal},'Cancelar'), h('button',{type:'submit',class:'btn btn-primary'},'Salvar'))));
   f.addEventListener('submit', async ev => {
@@ -971,7 +975,7 @@ function siteRoomForm(r, rooms){
       const list = [...am.querySelectorAll('input:checked')].map(i=>i.value);
       for (const x of other.value.split(',').map(t=>t.trim()).filter(Boolean)) if (!list.includes(x)) list.push(x);
       const payload = {name:name.value.trim(),tag:tag.value.trim()||null,fits:fits.value.trim()||null,price:Number(price.value),
-        amenities:list,photo_url,photo_alt:alt.value.trim()||null,visible:visible.checked};
+        amenities:list,photo_url,photo_alt:alt.value.trim()||null,visible:visible.checked,featured:featured.checked};
       if (!r) payload.position = rooms.reduce((m,x)=>Math.max(m,x.position),0)+1;
       const q = r ? sb.from('site_rooms').update(payload).eq('id',r.id) : sb.from('site_rooms').insert(payload);
       const {error} = await q; if (error){ if (photo_url!==d.photo_url) dropImage(photo_url); throw error; }
