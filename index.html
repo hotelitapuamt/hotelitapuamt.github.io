@@ -765,13 +765,15 @@
       +"<ul>"+ams+"</ul>"
       +'<div class="res"><a class="btn btn-dark" href="'+wa(r.name,r.price)+'" target="_blank" rel="noopener">Reservar '+esc(r.name)+"</a></div></div></article>";
   }
-  fetch(U+"/rest/v1/site_rooms?select=name,tag,fits,price,amenities,photo_url,photo_alt,position&visible=eq.true&order=position",{headers:{apikey:K}})
+  fetch(U+"/rest/v1/site_rooms?select=name,tag,fits,price,amenities,photo_url,photo_alt,position,featured&visible=eq.true&order=position",{headers:{apikey:K}})
     .then(function(r){return r.ok?r.json():[];})
     .then(function(rooms){
       if(!rooms||!rooms.length)return;
       var g=document.getElementById("roomGrid"); if(g)g.innerHTML=rooms.map(card).join("");
       var strip=document.querySelector(".rate-strip .wrap");
-      if(strip)strip.innerHTML=rooms.slice(0,3).map(function(r){return '<a href="#quartos"><span class="t">'+esc(r.name)+'</span><span class="p"><b>'+money(r.price)+"</b><span>/ diária</span></span></a>";}).join("");
+      var feat=rooms.filter(function(r){return r.featured;});
+      var top=(feat.length?feat:rooms).slice(0,3);
+      if(strip)strip.innerHTML=top.map(function(r){return '<a href="#quartos"><span class="t">'+esc(r.name)+'</span><span class="p"><b>'+money(r.price)+"</b><span>/ diária</span></span></a>";}).join("");
       var fr=document.querySelector(".foot-rates");
       if(fr)fr.innerHTML=rooms.map(function(r){return '<div><div class="t">'+esc(r.name)+'</div><div class="v">'+money(r.price)+"</div></div>";}).join("");
       try{
