@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#2c2d31" />
 <title>Hotel Itapuã — Diárias a partir de R$190 em Várzea Grande - MT</title>
-<meta name="description" content="Quartos de casal, solteiro, triplo e quádruplo com ar-condicionado, TV e frigobar, em Várzea Grande - MT (perto de Cuiabá). Diárias a partir de R$190. Reservas pelo WhatsApp." />
+<meta name="description" content="Quartos de casal, solteiro e triplo com ar-condicionado, TV e frigobar, em Várzea Grande - MT (perto de Cuiabá). Diárias a partir de R$190. Reservas pelo WhatsApp." />
 <meta name="keywords" content="hotel em Várzea Grande, hotel Várzea Grande MT, hotel Cuiabá, hospedagem Várzea Grande, hotel barato Várzea Grande, diária de hotel, Hotel Itapuã, Água Limpa" />
 <meta name="robots" content="index, follow" />
 <meta name="author" content="Hotel Itapuã" />
@@ -34,11 +34,11 @@
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
   "name": "Hotel Itapuã",
-  "description": "Hotel em Várzea Grande - MT com quartos de casal, solteiro, triplo e quádruplo, ar-condicionado, TV e frigobar.",
+  "description": "Hotel em Várzea Grande - MT com quartos de casal, solteiro e triplo, ar-condicionado, TV e frigobar.",
   "url": "https://hotelitapuamt.com.br/",
   "image": "https://hotelitapuamt.com.br/img/room-floral-wide.jpg",
   "telephone": "+556574000781",
-  "priceRange": "R$190 - R$300",
+  "priceRange": "R$190 - R$230",
   "currenciesAccepted": "BRL",
   "sameAs": ["https://www.instagram.com/hotelitapuamt/"],
   "address": {
@@ -56,9 +56,8 @@
   ],
   "makesOffer": [
     {"@type": "Offer", "name": "Quarto Casal", "price": "200.00", "priceCurrency": "BRL"},
-    {"@type": "Offer", "name": "Quarto Solteiro", "price": "190.00", "priceCurrency": "BRL"},
     {"@type": "Offer", "name": "Quarto Triplo", "price": "230.00", "priceCurrency": "BRL"},
-    {"@type": "Offer", "name": "Quarto Quádruplo", "price": "300.00", "priceCurrency": "BRL"}
+    {"@type": "Offer", "name": "Quarto Solteiro", "price": "190.00", "priceCurrency": "BRL"}
   ]
 }
 </script>
@@ -390,6 +389,11 @@
   .rcard ul li{font-size:.8rem;color:#47433c;background:var(--ivory-2);padding:7px 13px;border-radius:999px}
   .rcard .res{margin-top:auto;padding-top:22px}
   .rcard .res a{display:block;width:100%;text-align:center}
+  .rcard{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  .rcard:hover{transform:translateY(-5px);box-shadow:0 30px 55px -30px rgba(38,39,42,.5)}
+  .rcard .ph img{transition:transform 1s var(--ease)}
+  .rcard:hover .ph img{transform:scale(1.05)}
+  @media (prefers-reduced-motion: reduce){.rcard,.rcard .ph img{transition:none}.rcard:hover{transform:none}.rcard:hover .ph img{transform:none}}
 </style>
 </head>
 <body>
@@ -450,7 +454,7 @@
   <div class="hero-inner">
     <div class="wrap">
       <h1><span class="ln"><span>Hotel</span></span><span class="ln"><span>Itapuã</span></span></h1>
-      <p class="tagline">Quartos climatizados, cama boa e o essencial para descansar. Chegue, acomode-se e fique à vontade.</p>
+      <p class="tagline">Hospedagem simples e bem cuidada em Várzea Grande, a poucos minutos de Cuiabá. Quartos com ar-condicionado, TV e frigobar, e reserva rápida pelo WhatsApp.</p>
       <div class="hero-actions">
         <a class="btn btn-copper magnet" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z"/></svg>
@@ -462,9 +466,9 @@
   </div>
   <div class="rate-strip">
     <div class="wrap">
-      <a href="#quartos" data-room="0"><span class="t">Casal</span><span class="p"><b>R$200</b><span>/ diária</span></span></a>
-      <a href="#quartos" data-room="1"><span class="t">Duplo</span><span class="p"><b>R$190</b><span>/ diária</span></span></a>
-      <a href="#quartos" data-room="2"><span class="t">Triplo</span><span class="p"><b>R$230</b><span>/ diária</span></span></a>
+      <a href="#quartos"><span class="t">Casal</span><span class="p"><b>R$200</b><span>/ diária</span></span></a>
+      <a href="#quartos"><span class="t">Triplo</span><span class="p"><b>R$230</b><span>/ diária</span></span></a>
+      <a href="#quartos"><span class="t">Solteiro</span><span class="p"><b>R$190</b><span>/ diária</span></span></a>
     </div>
   </div>
 </section>
@@ -477,9 +481,9 @@
       <p>Nossos quartos para quem viaja sozinho, em dupla ou em grupo. Todos com ar-condicionado, TV, frigobar e banheiro.</p>
     </div>
     <div class="rgrid" id="roomGrid">
-      <article class="rcard"><div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-couple.jpg" alt="Quarto casal" loading="lazy"></div><div class="body"><h3>Casal</h3><p class="fits">Cama de casal &middot; ideal para o casal</p><div class="price"><span class="v">R$200</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Casal%20%28R%24160%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Casal</a></div></div></article>
-      <article class="rcard"><div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-floral-wide.jpg" alt="Quarto duplo" loading="lazy"></div><div class="body"><h3>Duplo</h3><p class="fits">Cama de casal + solteiro &middot; mais espaço</p><div class="price"><span class="v">R$190</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Duplo%20%28R%24190%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Duplo</a></div></div></article>
-      <article class="rcard"><div class="ph"><span class="tag">Para 3 pessoas</span><img src="img/room-blue-twin.jpg" alt="Quarto triplo" loading="lazy"></div><div class="body"><h3>Triplo</h3><p class="fits">Cama de casal + solteiro &middot; acomoda 3</p><div class="price"><span class="v">R$230</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Triplo%20%28R%24230%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Triplo</a></div></div></article>
+      <article class="rcard"><div class="ph"><span class="tag">Para 2 pessoas</span><img src="img/room-couple.jpg" width="1600" height="1200" alt="Quarto casal com cama de casal e janela" loading="lazy"></div><div class="body"><h3>Casal</h3><p class="fits">Cama de casal &middot; ideal para o casal</p><div class="price"><span class="v">R$200</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Casal%20%28R%24200%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Casal</a></div></div></article>
+      <article class="rcard"><div class="ph"><span class="tag">Para 3 pessoas</span><img src="img/room-blue-twin.jpg" width="1600" height="1200" alt="Quarto triplo com cama de casal e cama de solteiro" loading="lazy"></div><div class="body"><h3>Triplo</h3><p class="fits">Cama de casal + solteiro &middot; acomoda 3</p><div class="price"><span class="v">R$230</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Triplo%20%28R%24230%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Triplo</a></div></div></article>
+      <article class="rcard"><div class="ph"><span class="tag">Para 2 pessoas</span><img src="https://hayslcuhsqnlatcpllqk.supabase.co/storage/v1/object/public/quartos/d2b78ecc-d374-4933-8d12-0af6f3be5c24.jpg" width="1600" height="1200" alt="Quarto com duas camas de solteiro" loading="lazy"></div><div class="body"><h3>Solteiro</h3><p class="fits">2 camas de solteiro</p><div class="price"><span class="v">R$190</span><span class="u">por diária</span></div><ul><li>Ar-condicionado</li><li>TV</li><li>Frigobar</li><li>Banheiro</li></ul><div class="res"><a class="btn btn-dark" href="https://wa.me/556574000781?text=Ol%C3%A1%21%20Gostaria%20de%20reservar%20o%20quarto%20Solteiro%20%28R%24190%29%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar Solteiro</a></div></div></article>
     </div>
   </div>
 </section>
@@ -577,8 +581,8 @@
       <div class="foot-cta rv">
         <div class="foot-rates">
           <div><div class="t">Casal</div><div class="v">R$200</div></div>
-          <div><div class="t">Duplo</div><div class="v">R$190</div></div>
           <div><div class="t">Triplo</div><div class="v">R$230</div></div>
+          <div><div class="t">Solteiro</div><div class="v">R$190</div></div>
         </div>
         <a class="btn btn-copper magnet" href="https://wa.me/556574000781?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Itapu%C3%A3." target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
       </div>
